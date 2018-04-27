@@ -12,6 +12,7 @@ TagManager:
   - groundcal
   - manager
   - pos
+  - player
   layers:
   - Default
   - TransparentFX

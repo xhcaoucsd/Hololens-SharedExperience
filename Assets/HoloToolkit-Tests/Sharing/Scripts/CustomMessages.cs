@@ -21,6 +21,14 @@ namespace HoloToolkit.Sharing.Tests
         public enum TestMessageID : byte
         {
             HeadTransform = MessageID.UserMessageIDStart,
+            GameMaster,
+            SpawnTarget,
+            TargetCollision,
+            InitializeGame,
+            StartRound,
+            EndPrelude,
+            EndInterlude,
+            EndRound,
             Max
         }
 
@@ -138,6 +146,108 @@ namespace HoloToolkit.Sharing.Tests
                     MessageChannel.Avatar);
             }
         }
+
+        public void SendGameMaster()
+        {
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.GameMaster);
+
+                //msg.Write(userID);
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendSpawnTarget(Vector3 spawnPosition, Quaternion spawnRotation)
+        {
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SpawnTarget);
+
+                AppendTransform(msg, spawnPosition, spawnRotation);
+
+                //msg.Write(userID);
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendTargetCollision(long playerID)
+        {
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.TargetCollision);
+                msg.Write(playerID);
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendInitializeGame()
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.InitializeGame);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
+        public void SendStartRound()
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.StartRound);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
+        public void SendEndPrelude()
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.EndPrelude);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
+        public void SendEndInterlude()
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.EndInterlude);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
+        public void SendEndRound()
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.EndRound);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
 
         protected override void OnDestroy()
         {

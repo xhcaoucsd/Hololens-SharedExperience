@@ -1,0 +1,4 @@
+C:\Users\HackReality\Desktop\xianhai cao\Sharing_test\Hololens-SharedExperience\App\GeneratedProjects\UWP\Assembly-CSharp\Assembly-CSharp.csproj;x86
+C:\Users\HackReality\Desktop\xianhai cao\Sharing_test\Hololens-SharedExperience\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+C:\Users\HackReality\Desktop\xianhai cao\Sharing_test\Hololens-SharedExperience\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+C:\Users\HackReality\Desktop\xianhai cao\Sharing_test\Hololens-SharedExperience\App\mysharedexp\mysharedexp.csproj;x86
