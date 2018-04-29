@@ -11,6 +11,9 @@ namespace HoloToolkit.Sharing.Tests
     /// Broadcasts the head transform of the local user to other users in the session,
     /// and adds and updates the head transforms of remote users.
     /// Head transforms are sent and received in the local coordinate space of the GameObject this component is on.
+    /// 
+    /// Performs all functions of 'musical chairs' game by designating a Game Master player and sending messages
+    /// between players and the game master. Add to this later
     /// </summary>
     public class GameManager : Singleton<GameManager>, ISpeechHandler
     {
@@ -18,6 +21,10 @@ namespace HoloToolkit.Sharing.Tests
         private readonly int INTERLUDE = 1;
         private readonly int POSTLUDE = 2;
 
+        /// <summary>
+        /// Contains information on a player in the game. ID used to identify player when actions happen
+        /// and PlayerObject contains info on the player's rendered object in Unity (position, prefab, etc)
+        /// </summary>
         public class PlayerInfo
         {
             public long UserID;
@@ -25,25 +32,25 @@ namespace HoloToolkit.Sharing.Tests
         }
 
         private long gameMasterID = 0;
-        public Material materialGameMaster;
+        public Material materialGameMaster; // material specifies who is the game master
         public Material materialNormal;
-        public Material materialSurvived;
-        public Material materialDead;
-        public Material materialTargetCollided;
-        public float targetSpawnRadius;
-        public float delayPrelude;
-        public float delayPostlude;
+        public Material materialSurvived; // material of a survived player
+        public Material materialDead; // material of a dead player
+        public Material materialTargetCollided; // material of the collision object (in this case the capsule) when something collides with it
+        public float targetSpawnRadius; // radius in which collision object can be spawned
+        public float delayPrelude; 
+        public float delayPostlude; 
 
 
-        public GameObject p_Target;
+        public GameObject p_Target; 
         public GameObject p_Player;
         public GameObject infoDisplay;
 
-        public Dictionary<long, PlayerInfo> remotePlayers = new Dictionary<long, PlayerInfo>();
-        private Dictionary<string, GameObject> sharedObjects = new Dictionary<string, GameObject>();
+        public Dictionary<long, PlayerInfo> remotePlayers = new Dictionary<long, PlayerInfo>(); // contains list of players connected to server
+        private Dictionary<string, GameObject> sharedObjects = new Dictionary<string, GameObject>(); 
 
-        private PlayerInfo localPlayer;
-        private bool inGame;
+        private PlayerInfo localPlayer; // PlayerInfo object for testing on local host (using our computer/unity instead of hololens)
+        private bool inGame; 
         private int gameState;
         private bool playerOut;
         private int maxRounds;
@@ -52,14 +59,16 @@ namespace HoloToolkit.Sharing.Tests
         private int playersTotal;
         private int playersLeft;
         private float delayInterval;
-        private List<long> allPlayers;
-        private List<long> alivePlayers;
-        private List<long> safePlayers;
+        private List<long> allPlayers; // list of all players
+        private List<long> alivePlayers; // list of players still alive
+        private List<long> safePlayers; // list of players who have entered the collision object in a current round
 
         private void Start()
         {
             InputManager.Instance.PushModalInputHandler(gameObject);
 
+            // add handlers for each type of message sent
+            // if a message is sent with that specific type, the corresponding handler method will be called
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.HeadTransform] = HandleUpdatePlayer;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.GameMaster] = HandleUpdateGameMaster;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.SpawnTarget] = HandleSpawnTarget;
@@ -69,6 +78,7 @@ namespace HoloToolkit.Sharing.Tests
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndPrelude] = HandleEndPrelude;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndInterlude] = HandleEndInterlude;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndRound] = HandleEndRound;
+            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.SafeSignal] = HandleSafeSignal;
 
             // SharingStage should be valid at this point, but we may not be connected.
             if (SharingStage.Instance.IsConnected)
@@ -80,15 +90,22 @@ namespace HoloToolkit.Sharing.Tests
                 SharingStage.Instance.SharingManagerConnected += Connected;
             }
 
+            // create PlayerInfo object for local player
             localPlayer = new PlayerInfo();
+            // get ID for local player
             localPlayer.UserID = SharingStage.Instance.Manager.GetLocalUser().GetID();
+            // create remote player version of local player to add to remotePlayers list
             localPlayer.PlayerObject = CreateRemotePlayer();
+            // putting local player in remote players list allows local player to be the same as a player connected wirelessly through the hololens
+            remotePlayers.Add(localPlayer.UserID, localPlayer);
 
+            // initialize appropriate lists
             allPlayers = new List<long>();
             alivePlayers = new List<long>();
             safePlayers = new List<long>();
 
-            infoDisplay.GetComponent<Text>().text = "Game not started";
+            // each player starts with a display of their own ID (for testing purposes)
+            infoDisplay.GetComponent<Text>().text = "Start: " + localPlayer.UserID;
         }
 
         private void Connected(object sender = null, EventArgs e = null)
@@ -99,6 +116,7 @@ namespace HoloToolkit.Sharing.Tests
             SharingStage.Instance.SessionUsersTracker.UserLeft += UserLeftSession;
         }
 
+        // called 60(?) times a second to check progress of game and switch between game phases
         private void Update()
         {
             // Grab the current head transform and broadcast it to all the other users in the session
@@ -108,11 +126,14 @@ namespace HoloToolkit.Sharing.Tests
             Vector3 headPosition = transform.InverseTransformPoint(headTransform.position); //I ADDED THE SPAWNER PART- GameObject.FindGameObjectWithTag("spawner").transform.position
             Quaternion headRotation = Quaternion.Inverse(transform.rotation) * headTransform.rotation;
 
-
+            // every player's sends info on their position to update constantly
             CustomMessages.Instance.SendHeadTransform(headPosition, headRotation);
 
+            // update own player's position/rotation
             localPlayer.PlayerObject.transform.position = headPosition;
             localPlayer.PlayerObject.transform.rotation = headRotation;
+
+            // render Game Master as different material from other players
             if (ImGameMaster())
                 localPlayer.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialGameMaster;
             else
@@ -120,7 +141,7 @@ namespace HoloToolkit.Sharing.Tests
 
 
             
-
+            // Game Master checks if game state needs to be changed
             if (ImGameMaster() && inGame)
             {
                 switch (gameState)
@@ -143,6 +164,7 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
+        // Used to remove player from session
         protected override void OnDestroy()
         {
             if (SharingStage.Instance != null)
@@ -198,6 +220,7 @@ namespace HoloToolkit.Sharing.Tests
                 playerInfo = new PlayerInfo();
                 playerInfo.UserID = userId;
                 playerInfo.PlayerObject = CreateRemotePlayer();
+                playerInfo.PlayerObject.GetComponent<Player>().PlayerID = userId;
 
                 remotePlayers.Add(userId, playerInfo);
             }
@@ -248,17 +271,22 @@ namespace HoloToolkit.Sharing.Tests
 
         private void SpawnTarget()
         {
+            // only the Game Master can spawn objects (?)
             if (ImGameMaster())
             {
+                // get one's own position information
                 Transform headTransform = Camera.main.transform;
+                // spawn object in front of player by a certain amount
                 Vector3 spawnPosition = headTransform.position + headTransform.forward * 3;
 
                 spawnPosition = transform.InverseTransformPoint(spawnPosition); //I ADDED THE SPAWNER PART- GameObject.FindGameObjectWithTag("spawner").transform.position
                 Quaternion spawnRotation = Quaternion.Inverse(transform.rotation) * headTransform.rotation;
 
+                // send message to all users that an object was spawned containing object's information
                 CustomMessages.Instance.SendSpawnTarget(spawnPosition, spawnRotation);
 
                 GameObject target;
+                // if object has not been made yet, create it (?)
                 if (!sharedObjects.TryGetValue("target", out target))
                 {
                     target = Instantiate(p_Target, gameObject.transform);
@@ -271,26 +299,40 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        // TO DO WRITE UP COLLIDER CODE
+        // TO DO WRITE UP COLLIDER CODEi
+        // what is broadcast
+        // Called when player collides with a target
         public void TargetCollision(long colliderID, bool broadcast=false)
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendTargetCollision(colliderID);
 
-            infoDisplay.GetComponent<Text>().text = "Target Collided!";
+            //infoDisplay.GetComponent<Text>().text = "Target Collided!";
 
             GameObject target;
+            // set target object to materialTargetCollided (green color)
             if (sharedObjects.TryGetValue("target", out target))
             {
                 target.GetComponent<Renderer>().sharedMaterial = materialTargetCollided;
             }
+            Debug.Log("SAFE: " + safePlayers.Count);
+            Debug.Log("ALIVE: " + alivePlayers.Count);
+            Debug.Log("MAX: " + maxSafePlayers);
+            Debug.Log("COLLIDER ID: " + colliderID);
+            foreach (long id in alivePlayers)
+            {
+                Debug.Log("ALIVE ID: " + id);
+            }
+           
+            // Show player is safe if they collided before round ended and are not already safe
             if (alivePlayers.Contains(colliderID) && safePlayers.Count < maxSafePlayers && !safePlayers.Contains(colliderID))
             {
                 safePlayers.Add(colliderID);
                 if (IDisMine(colliderID))
-                {
                     infoDisplay.GetComponent<Text>().text = "You're safe!";
-                }
+
+
+
             }
         }
 
@@ -332,13 +374,20 @@ namespace HoloToolkit.Sharing.Tests
             gameState = INTERLUDE;
         }
 
+        // Ends main part of the game and determines which players survived and displays it to their screens
         private void EndInterlude(bool broadcast=false)
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendEndInterlude();
 
+            gameState = POSTLUDE;
+
+            delayInterval = Time.time + delayPostlude;
+
+            // goes through each player that was playing in the round
             foreach (long playerID in alivePlayers)
             {
+                // if not safe, remove player from alive players and set as dead
                 if (!safePlayers.Contains(playerID))
                 {
                     alivePlayers.Remove(playerID);
@@ -347,12 +396,13 @@ namespace HoloToolkit.Sharing.Tests
                     if (remotePlayers.TryGetValue(playerID, out playerInfo))
                         playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialDead;
                     
-                
+                    // if my player is dead, display it
                     if (IDisMine(playerID))
                         infoDisplay.GetComponent<Text>().text = "Dead";
                 }
                 else
                 {
+                    // if alive, show they survived
                     PlayerInfo playerInfo;
                     if (remotePlayers.TryGetValue(playerID, out playerInfo))
                         playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialSurvived;
@@ -363,12 +413,11 @@ namespace HoloToolkit.Sharing.Tests
 
             }
 
-            gameState = POSTLUDE;
-
-            delayInterval = Time.time + delayPostlude;
+            
 
         }
 
+        
         private void EndRound(bool broadcast=false)
         {
             if (broadcast && ImGameMaster())
@@ -429,7 +478,7 @@ namespace HoloToolkit.Sharing.Tests
             playersLeft = playersTotal;
             maxRounds = playersTotal - 1;
 
-            infoDisplay.GetComponent<Text>().text = "In game";
+            //infoDisplay.GetComponent<Text>().text = "In game";
         }
 
         private void PlayGame()
@@ -526,6 +575,15 @@ namespace HoloToolkit.Sharing.Tests
             long userID = msg.ReadInt64();
             if (IsGameMasterFree())
                 gameMasterID = userID;
+        }
+
+        private void HandleSafeSignal(NetworkInMessage msg)
+        {
+            msg.ReadInt64();
+            long playerID = msg.ReadInt64();
+            if (IDisMine(playerID))
+                infoDisplay.GetComponent<Text>().text = "You're safe!";
+            
         }
 
         private bool IsGameMaster(long userID)

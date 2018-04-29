@@ -9,7 +9,7 @@ mysharedexp.sln: modified
 GeneratedProjects\UWP\Assembly-CSharp\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
 GeneratedProjects\UWP\Assembly-CSharp-firstpass\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
 mysharedexp\App.cs: EC15842B1177CBD933BBF9F332492630
-mysharedexp\mysharedexp.csproj: 74FD62343E2D609C931634A7F9E5B791
+mysharedexp\mysharedexp.csproj: modified
 mysharedexp\mysharedexp.csproj.user: modified
 mysharedexp\Package.appxmanifest: 3B05267255076C8204986BF4AAB78FBD
 mysharedexp\project.json: 1D02BC64BAC0D041019673A1C4C51737

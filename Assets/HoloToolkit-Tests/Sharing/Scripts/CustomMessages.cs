@@ -29,6 +29,7 @@ namespace HoloToolkit.Sharing.Tests
             EndPrelude,
             EndInterlude,
             EndRound,
+            SafeSignal,
             Max
         }
 
@@ -240,6 +241,19 @@ namespace HoloToolkit.Sharing.Tests
         public void SendEndRound()
         {
             NetworkOutMessage msg = CreateMessage((byte)TestMessageID.EndRound);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
+        public void SendSafeSignal (long playerID)
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SafeSignal);
+
+            msg.Write(playerID);
 
             serverConnection.Broadcast(
                 msg,
