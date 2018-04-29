@@ -63,6 +63,8 @@ namespace HoloToolkit.Sharing.Tests
         private List<long> alivePlayers; // list of players still alive
         private List<long> safePlayers; // list of players who have entered the collision object in a current round
 
+        private bool resourceLocked = false;
+
         private void Start()
         {
             InputManager.Instance.PushModalInputHandler(gameObject);
@@ -142,7 +144,7 @@ namespace HoloToolkit.Sharing.Tests
 
             
             // Game Master checks if game state needs to be changed
-            if (ImGameMaster() && inGame)
+            if (ImGameMaster() && inGame && !resourceLocked)
             {
                 switch (gameState)
                 {
@@ -298,14 +300,17 @@ namespace HoloToolkit.Sharing.Tests
                 target.transform.localRotation = spawnRotation;
             }
         }
-
-        // TO DO WRITE UP COLLIDER CODEi
+        
         // what is broadcast
         // Called when player collides with a target
         public void TargetCollision(long colliderID, bool broadcast=false)
         {
+            if (gameState != INTERLUDE)
+                return;
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendTargetCollision(colliderID);
+
+            resourceLocked = true;
 
             //infoDisplay.GetComponent<Text>().text = "Target Collided!";
 
@@ -330,10 +335,9 @@ namespace HoloToolkit.Sharing.Tests
                 safePlayers.Add(colliderID);
                 if (IDisMine(colliderID))
                     infoDisplay.GetComponent<Text>().text = "You're safe!";
-
-
-
             }
+
+            resourceLocked = false;
         }
 
         private void StartRound(bool broadcast=false)
@@ -380,40 +384,47 @@ namespace HoloToolkit.Sharing.Tests
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendEndInterlude();
 
-            gameState = POSTLUDE;
-
-            delayInterval = Time.time + delayPostlude;
+            resourceLocked = true;
 
             // goes through each player that was playing in the round
-            foreach (long playerID in alivePlayers)
+            
+            for (int i = alivePlayers.Count - 1; i >= 0; i--)
             {
                 // if not safe, remove player from alive players and set as dead
-                if (!safePlayers.Contains(playerID))
+                if (!safePlayers.Contains(alivePlayers[i]))
                 {
-                    alivePlayers.Remove(playerID);
+
+                    
 
                     PlayerInfo playerInfo;
-                    if (remotePlayers.TryGetValue(playerID, out playerInfo))
+                    if (remotePlayers.TryGetValue(alivePlayers[i], out playerInfo))
                         playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialDead;
                     
                     // if my player is dead, display it
-                    if (IDisMine(playerID))
+                    if (IDisMine(alivePlayers[i]))
                         infoDisplay.GetComponent<Text>().text = "Dead";
+
+                    alivePlayers.RemoveAt(i);
                 }
                 else
                 {
+                    
                     // if alive, show they survived
                     PlayerInfo playerInfo;
-                    if (remotePlayers.TryGetValue(playerID, out playerInfo))
+                    if (remotePlayers.TryGetValue(alivePlayers[i], out playerInfo))
                         playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialSurvived;
-                   
-                    if (IDisMine(playerID))
+                    
+                    if (IDisMine(alivePlayers[i]))
                         infoDisplay.GetComponent<Text>().text = "Survived";
                 }
 
             }
 
-            
+            gameState = POSTLUDE;
+
+            delayInterval = Time.time + delayPostlude;
+
+            resourceLocked = false;
 
         }
 

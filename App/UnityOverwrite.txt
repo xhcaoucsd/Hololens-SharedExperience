@@ -8,10 +8,10 @@
 mysharedexp.sln: modified
 GeneratedProjects\UWP\Assembly-CSharp\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
 GeneratedProjects\UWP\Assembly-CSharp-firstpass\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
-mysharedexp\App.cs: EC15842B1177CBD933BBF9F332492630
+mysharedexp\App.cs: modified
 mysharedexp\mysharedexp.csproj: modified
 mysharedexp\mysharedexp.csproj.user: modified
-mysharedexp\Package.appxmanifest: 3B05267255076C8204986BF4AAB78FBD
+mysharedexp\Package.appxmanifest: 8CD2CDACC3F0E53251D8007C10EDAAAD
 mysharedexp\project.json: 1D02BC64BAC0D041019673A1C4C51737
 mysharedexp\Assets\SplashScreen.scale-200.png: 60618416282ED104FD1473935716045D
 mysharedexp\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
@@ -19,6 +19,13 @@ mysharedexp\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775
 mysharedexp\Assets\Square44x44Logo.targetsize-24_altform-unplated.png: 156637F7B5363E983E7A46D8E533A23D
 mysharedexp\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
 mysharedexp\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
+mysharedexp\bin\x86\Release\AppX\Assets\SplashScreen.scale-200.png: 60618416282ED104FD1473935716045D
+mysharedexp\bin\x86\Release\AppX\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
+mysharedexp\bin\x86\Release\AppX\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775DE
+mysharedexp\bin\x86\Release\AppX\Assets\Square44x44Logo.targetsize-24_altform-unplated.png: 156637F7B5363E983E7A46D8E533A23D
+mysharedexp\bin\x86\Release\AppX\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
+mysharedexp\bin\x86\Release\AppX\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
+mysharedexp\bin\x86\Release\AppX\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826
 mysharedexp\obj\x86\Release\mysharedexp.csproj.CopyComplete: D41D8CD98F00B204E9800998ECF8427E
-mysharedexp\Properties\AssemblyInfo.cs: 739A00AA844580D1B2A6F2B733F30D41
+mysharedexp\Properties\AssemblyInfo.cs: modified
 mysharedexp\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826
