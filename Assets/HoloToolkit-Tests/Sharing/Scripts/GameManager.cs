@@ -44,7 +44,6 @@ namespace HoloToolkit.Sharing.Tests
 
         public GameObject p_Target; 
         public GameObject p_Player;
-        public GameObject infoDisplay;
 
         public Dictionary<long, PlayerInfo> remotePlayers = new Dictionary<long, PlayerInfo>(); // contains list of players connected to server
         private Dictionary<string, GameObject> sharedObjects = new Dictionary<string, GameObject>(); 
@@ -107,7 +106,7 @@ namespace HoloToolkit.Sharing.Tests
             safePlayers = new List<long>();
 
             // each player starts with a display of their own ID (for testing purposes)
-            infoDisplay.GetComponent<Text>().text = "Start: " + localPlayer.UserID;
+            Debug.Log("Your ID: " + localPlayer.UserID);
         }
 
         private void Connected(object sender = null, EventArgs e = null)
@@ -259,7 +258,6 @@ namespace HoloToolkit.Sharing.Tests
             switch (eventData.RecognizedText.ToLower())
             {
                 case "initialize":
-                    Debug.Log("Sending message");
                     AssumeGameMaster();
                     break;
                 case "start":
@@ -312,18 +310,12 @@ namespace HoloToolkit.Sharing.Tests
 
             resourceLocked = true;
 
-            //infoDisplay.GetComponent<Text>().text = "Target Collided!";
-
             GameObject target;
             // set target object to materialTargetCollided (green color)
             if (sharedObjects.TryGetValue("target", out target))
             {
                 target.GetComponent<Renderer>().sharedMaterial = materialTargetCollided;
             }
-            Debug.Log("SAFE: " + safePlayers.Count);
-            Debug.Log("ALIVE: " + alivePlayers.Count);
-            Debug.Log("MAX: " + maxSafePlayers);
-            Debug.Log("COLLIDER ID: " + colliderID);
             foreach (long id in alivePlayers)
             {
                 Debug.Log("ALIVE ID: " + id);
@@ -334,7 +326,7 @@ namespace HoloToolkit.Sharing.Tests
             {
                 safePlayers.Add(colliderID);
                 if (IDisMine(colliderID))
-                    infoDisplay.GetComponent<Text>().text = "You're safe!";
+                    Debug.Log("You are safe");
             }
 
             resourceLocked = false;
@@ -344,12 +336,12 @@ namespace HoloToolkit.Sharing.Tests
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendStartRound();
-            //gameState = PRELUDE;
-            gameState = INTERLUDE;
+            gameState = PRELUDE;
+            //gameState = INTERLUDE;
             delayInterval = Time.time + delayPrelude;
             maxSafePlayers = maxRounds - completedRounds;
             safePlayers.Clear();
-
+            Debug.Log("Round has begun");
             if (ImGameMaster())
             {
                 Vector3 targetPos = GetRandomPos(targetSpawnRadius);
@@ -374,7 +366,7 @@ namespace HoloToolkit.Sharing.Tests
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendEndPrelude();
-
+            Debug.Log("Interlude has begun");
             gameState = INTERLUDE;
         }
 
@@ -399,10 +391,10 @@ namespace HoloToolkit.Sharing.Tests
                     PlayerInfo playerInfo;
                     if (remotePlayers.TryGetValue(alivePlayers[i], out playerInfo))
                         playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialDead;
-                    
+
                     // if my player is dead, display it
                     if (IDisMine(alivePlayers[i]))
-                        infoDisplay.GetComponent<Text>().text = "Dead";
+                        Debug.Log("You have died");
 
                     alivePlayers.RemoveAt(i);
                 }
@@ -415,7 +407,7 @@ namespace HoloToolkit.Sharing.Tests
                         playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialSurvived;
                     
                     if (IDisMine(alivePlayers[i]))
-                        infoDisplay.GetComponent<Text>().text = "Survived";
+                        Debug.Log("You have survived");
                 }
 
             }
@@ -425,6 +417,8 @@ namespace HoloToolkit.Sharing.Tests
             delayInterval = Time.time + delayPostlude;
 
             resourceLocked = false;
+
+            Debug.Log("Postlude has begun");
 
         }
 
@@ -447,18 +441,20 @@ namespace HoloToolkit.Sharing.Tests
                 PlayerInfo playerInfo;
                 if (remotePlayers.TryGetValue(playerID, out playerInfo))
                     playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialNormal;
-          
+
 
                 if (IDisMine(playerID))
-                    infoDisplay.GetComponent<Text>().text = "In game";
+                    Debug.Log("You remain in the game");
             }
 
             completedRounds++;
-
-            /*if (ImGameMaster() && completedRounds < maxRounds)
-                StartRound(true);
-            */
             gameState = -1;
+            Debug.Log("Completed " + completedRounds + " rounds");
+
+            if (ImGameMaster() && completedRounds < maxRounds)
+                StartRound(true);
+            
+           
         }
 
         private void InitializeGame(bool broadcast=false)
@@ -469,8 +465,7 @@ namespace HoloToolkit.Sharing.Tests
             if (inGame)
                 return;
 
-            if (remotePlayers.Keys.Count < 2)
-                return;
+            
 
             playersTotal = remotePlayers.Keys.Count;
 
@@ -488,13 +483,15 @@ namespace HoloToolkit.Sharing.Tests
             completedRounds = 0;
             playersLeft = playersTotal;
             maxRounds = playersTotal - 1;
-
-            //infoDisplay.GetComponent<Text>().text = "In game";
+            
         }
 
         private void PlayGame()
         {
             if (!ImGameMaster())
+                return;
+
+            if (remotePlayers.Keys.Count < 2)
                 return;
 
             InitializeGame(broadcast: true);
@@ -582,7 +579,7 @@ namespace HoloToolkit.Sharing.Tests
 
         private void HandleUpdateGameMaster(NetworkInMessage msg)
         {
-            Debug.Log("GM RECIEVED");
+            Debug.Log("Designated gamemaster");
             long userID = msg.ReadInt64();
             if (IsGameMasterFree())
                 gameMasterID = userID;
@@ -593,7 +590,7 @@ namespace HoloToolkit.Sharing.Tests
             msg.ReadInt64();
             long playerID = msg.ReadInt64();
             if (IDisMine(playerID))
-                infoDisplay.GetComponent<Text>().text = "You're safe!";
+                Debug.Log("You are safe");
             
         }
 

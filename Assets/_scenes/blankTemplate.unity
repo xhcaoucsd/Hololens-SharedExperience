@@ -352,7 +352,6 @@ MonoBehaviour:
   delayPostlude: 5
   p_Target: {fileID: 1313401059611624, guid: a410c3b96765dd640a6b71882c257335, type: 2}
   p_Player: {fileID: 1331156556382096, guid: 2d47e6dca1cbf514580d265eb43e87f8, type: 2}
-  infoDisplay: {fileID: 509878446}
 --- !u!21 &476258860
 Material:
   serializedVersion: 6
@@ -396,6 +395,9 @@ GameObject:
   - component: {fileID: 509878449}
   - component: {fileID: 509878448}
   - component: {fileID: 509878447}
+  - component: {fileID: 509878452}
+  - component: {fileID: 509878451}
+  - component: {fileID: 509878450}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -462,6 +464,70 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: -5}
   m_SizeDelta: {x: 159.99998, y: 30}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &509878450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 509878446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83ec867b149522428fef3386f2fdb6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!102 &509878451
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 509878446}
+  m_Text: sample
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 40
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
+--- !u!23 &509878452
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 509878446}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1001 &610587846
 Prefab:
   m_ObjectHideFlags: 0
@@ -944,7 +1010,7 @@ Prefab:
     - target: {fileID: 11400004, guid: 384a0d8cc71cef74a873b3353337ea2c, type: 2}
       propertyPath: positionText
       value: 
-      objectReference: {fileID: 695984119}
+      objectReference: {fileID: 509878447}
     - target: {fileID: 11400004, guid: 384a0d8cc71cef74a873b3353337ea2c, type: 2}
       propertyPath: testText
       value: 
