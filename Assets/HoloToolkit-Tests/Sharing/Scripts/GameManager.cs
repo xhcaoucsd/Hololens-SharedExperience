@@ -344,8 +344,19 @@ namespace HoloToolkit.Sharing.Tests
             Debug.Log("Round has begun");
             if (ImGameMaster())
             {
+             
+      
+
+                /*
                 Vector3 targetPos = GetRandomPos(targetSpawnRadius);
+                    Quaternion targetRot = GetRandomRot();
+                    */
+
+                //fixed target spawn
+                Vector3 targetPos = Camera.main.transform.position + 2 * Camera.main.transform.forward;
                 Quaternion targetRot = GetRandomRot();
+
+
 
                 CustomMessages.Instance.SendSpawnTarget(targetPos, targetRot);
                 GameObject target;
