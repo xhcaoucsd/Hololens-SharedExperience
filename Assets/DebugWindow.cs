@@ -24,7 +24,7 @@ public class DebugWindow : MonoBehaviour
 
     public void LogMessage(string message, string stackTrace, LogType type)
     {
-        if (textMesh.text.Length > 300)
+        if (textMesh.text.Length > 500)
         {
             textMesh.text = message + "\n";
         }

@@ -31,6 +31,7 @@ namespace HoloToolkit.Sharing.Tests
                 if (gameManager.GetComponent<GameManager>().ImGameMaster())
                 {
                     long playerID = other.gameObject.GetComponent<Player>().PlayerID;
+                    Debug.Log("HELLO");
                     gameManager.GetComponent<GameManager>().TargetCollision(playerID, broadcast: true);
 
                 }

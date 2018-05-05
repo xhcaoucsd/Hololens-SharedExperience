@@ -25,6 +25,7 @@ namespace HoloToolkit.Sharing.Tests
             SpawnTarget,
             TargetCollision,
             InitializeGame,
+            TerminateGame,
             StartRound,
             EndPrelude,
             EndInterlude,
@@ -197,6 +198,17 @@ namespace HoloToolkit.Sharing.Tests
         public void SendInitializeGame()
         {
             NetworkOutMessage msg = CreateMessage((byte)TestMessageID.InitializeGame);
+
+            serverConnection.Broadcast(
+                msg,
+                MessagePriority.Immediate,
+                MessageReliability.UnreliableSequenced,
+                MessageChannel.Avatar);
+        }
+
+        public void SendTerminateGame()
+        {
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.TerminateGame);
 
             serverConnection.Broadcast(
                 msg,

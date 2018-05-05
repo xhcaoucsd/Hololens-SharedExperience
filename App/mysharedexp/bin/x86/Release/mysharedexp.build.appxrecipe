@@ -454,6 +454,9 @@
     <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\sharedassets0.assets.resS">
       <PackagePath>Data\sharedassets0.assets.resS</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\sharedassets0.resource">
+      <PackagePath>Data\sharedassets0.resource</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\StreamingAssets\Vuforia\sharinganchor.dat">
       <PackagePath>Data\StreamingAssets\Vuforia\sharinganchor.dat</PackagePath>
     </AppxPackagedFile>

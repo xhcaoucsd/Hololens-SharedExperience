@@ -37,10 +37,13 @@ namespace HoloToolkit.Sharing.Tests
         public Material materialSurvived; // material of a survived player
         public Material materialDead; // material of a dead player
         public Material materialTargetCollided; // material of the collision object (in this case the capsule) when something collides with it
-        public float targetSpawnRadius; // radius in which collision object can be spawned
-        public float delayPrelude; 
-        public float delayPostlude; 
+        public float targetSpawnRadius; // radius in which collision object can be spawned (currently 3)
+        public float delayPrelude; //currently 10
+        public float delayPostlude; //currently 10
 
+        public AudioClip preludeClip;
+        public AudioClip interludeClip;
+        public AudioClip postludeClip;
 
         public GameObject p_Target; 
         public GameObject p_Player;
@@ -63,6 +66,7 @@ namespace HoloToolkit.Sharing.Tests
         private List<long> safePlayers; // list of players who have entered the collision object in a current round
 
         private bool resourceLocked = false;
+        private bool roundStarted = false;
 
         private void Start()
         {
@@ -75,6 +79,7 @@ namespace HoloToolkit.Sharing.Tests
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.SpawnTarget] = HandleSpawnTarget;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.TargetCollision] = HandleTargetCollision;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.InitializeGame] = HandleInitializeGame;
+            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.TerminateGame] = HandleTerminateGame;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.StartRound] = HandleStartRound;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndPrelude] = HandleEndPrelude;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndInterlude] = HandleEndInterlude;
@@ -97,6 +102,8 @@ namespace HoloToolkit.Sharing.Tests
             localPlayer.UserID = SharingStage.Instance.Manager.GetLocalUser().GetID();
             // create remote player version of local player to add to remotePlayers list
             localPlayer.PlayerObject = CreateRemotePlayer();
+            // pass the local id to the gameobject
+            localPlayer.PlayerObject.GetComponent<Player>().PlayerID = localPlayer.UserID;
             // putting local player in remote players list allows local player to be the same as a player connected wirelessly through the hololens
             remotePlayers.Add(localPlayer.UserID, localPlayer);
 
@@ -163,6 +170,25 @@ namespace HoloToolkit.Sharing.Tests
                         break;
                 }
             }
+
+            //messages commented out for now so xianhai does not question what i am doing
+            //show player countdown in prelude/postlude
+            switch (gameState)
+            {
+                case 0:
+                    //if(roundStarted)
+                        //Debug.Log("Round Starting In:" + (delayInterval - Time.time)); 
+                    break;
+                case 1:
+                    //Debug.Log("Enter the target!");
+                    break;
+                case 2:
+                    //Debug.Log("Next Round In:" + (delayInterval - Time.time));
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         // Used to remove player from session
@@ -222,7 +248,7 @@ namespace HoloToolkit.Sharing.Tests
                 playerInfo.UserID = userId;
                 playerInfo.PlayerObject = CreateRemotePlayer();
                 playerInfo.PlayerObject.GetComponent<Player>().PlayerID = userId;
-
+                
                 remotePlayers.Add(userId, playerInfo);
             }
 
@@ -303,6 +329,7 @@ namespace HoloToolkit.Sharing.Tests
         // Called when player collides with a target
         public void TargetCollision(long colliderID, bool broadcast=false)
         {
+           
             if (gameState != INTERLUDE)
                 return;
             if (broadcast && ImGameMaster())
@@ -314,19 +341,23 @@ namespace HoloToolkit.Sharing.Tests
             // set target object to materialTargetCollided (green color)
             if (sharedObjects.TryGetValue("target", out target))
             {
-                target.GetComponent<Renderer>().sharedMaterial = materialTargetCollided;
+                target.GetComponentInChildren<Renderer>().sharedMaterial = materialTargetCollided;
             }
             foreach (long id in alivePlayers)
             {
                 Debug.Log("ALIVE ID: " + id);
             }
-           
+
+            Debug.Log("collider id: " + colliderID);
             // Show player is safe if they collided before round ended and are not already safe
             if (alivePlayers.Contains(colliderID) && safePlayers.Count < maxSafePlayers && !safePlayers.Contains(colliderID))
             {
                 safePlayers.Add(colliderID);
                 if (IDisMine(colliderID))
+                {
                     Debug.Log("You are safe");
+                    Camera.main.GetComponent<AudioSource>().Play();
+                }
             }
 
             resourceLocked = false;
@@ -334,9 +365,11 @@ namespace HoloToolkit.Sharing.Tests
 
         private void StartRound(bool broadcast=false)
         {
+            roundStarted = true;
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendStartRound();
             gameState = PRELUDE;
+
             //gameState = INTERLUDE;
             delayInterval = Time.time + delayPrelude;
             maxSafePlayers = maxRounds - completedRounds;
@@ -344,7 +377,7 @@ namespace HoloToolkit.Sharing.Tests
             Debug.Log("Round has begun");
             if (ImGameMaster())
             {
-                Vector3 targetPos = GetRandomPos(targetSpawnRadius);
+                Vector3 targetPos = GetRandomPos();
                 Quaternion targetRot = GetRandomRot();
 
                 CustomMessages.Instance.SendSpawnTarget(targetPos, targetRot);
@@ -358,6 +391,8 @@ namespace HoloToolkit.Sharing.Tests
 
                 target.transform.localPosition = targetPos;
                 target.transform.localRotation = targetRot;
+                target.GetComponent<AudioSource>().Play();
+                target.transform.localScale = Vector3.zero;
             }
 
         }
@@ -368,6 +403,12 @@ namespace HoloToolkit.Sharing.Tests
                 CustomMessages.Instance.SendEndPrelude();
             Debug.Log("Interlude has begun");
             gameState = INTERLUDE;
+            GameObject target;
+            if (sharedObjects.TryGetValue("target", out target))
+            {
+                target.transform.localScale = Vector3.one;
+                Camera.main.GetComponent<AudioSource>().Play();
+            }
         }
 
         // Ends main part of the game and determines which players survived and displays it to their screens
@@ -451,10 +492,12 @@ namespace HoloToolkit.Sharing.Tests
             gameState = -1;
             Debug.Log("Completed " + completedRounds + " rounds");
 
-            if (ImGameMaster() && completedRounds < maxRounds)
-                StartRound(true);
-            
-           
+            if (ImGameMaster()) {
+                if (completedRounds < maxRounds)
+                    StartRound(true);
+                else
+                    TerminateGame(true);
+            }         
         }
 
         private void InitializeGame(bool broadcast=false)
@@ -467,7 +510,7 @@ namespace HoloToolkit.Sharing.Tests
 
             
 
-            playersTotal = remotePlayers.Keys.Count;
+            playersTotal = remotePlayers.Keys.Count + 1;
 
             allPlayers.Clear();
             alivePlayers.Clear();
@@ -486,12 +529,30 @@ namespace HoloToolkit.Sharing.Tests
             
         }
 
+        private void TerminateGame(bool broadcast=false)
+        {
+            if (broadcast && ImGameMaster())
+                CustomMessages.Instance.SendTerminateGame();
+
+            allPlayers.Clear();
+            alivePlayers.Clear();
+            safePlayers.Clear();
+
+            inGame = false;
+            completedRounds = 0;
+            playersLeft = 0;
+            maxRounds = 0;
+
+            gameMasterID = 0;
+        }
+
         private void PlayGame()
         {
+            AssumeGameMaster();
             if (!ImGameMaster())
                 return;
 
-            if (remotePlayers.Keys.Count < 2)
+            if (remotePlayers.Keys.Count + 1 < 2)
                 return;
 
             InitializeGame(broadcast: true);
@@ -542,6 +603,10 @@ namespace HoloToolkit.Sharing.Tests
 
             target.transform.localPosition = targetPos;
             target.transform.localRotation = targetRot;
+            target.GetComponent<AudioSource>().Play();
+            target.GetComponent<Renderer>().enabled = false;
+            target.GetComponent<Collider>().enabled = false;
+
         }
 
         private void HandleTargetCollision(NetworkInMessage msg)
@@ -555,6 +620,11 @@ namespace HoloToolkit.Sharing.Tests
         private void HandleInitializeGame(NetworkInMessage msg)
         {
             InitializeGame();
+        }
+
+        private void HandleTerminateGame(NetworkInMessage msg)
+        {
+            TerminateGame();
         }
 
         private void HandleStartRound(NetworkInMessage msg)
@@ -623,14 +693,25 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        private Vector3 GetRandomPos(float radius)
-        {
-            return new Vector3(UnityEngine.Random.Range(0f, radius), 0, UnityEngine.Random.Range(0f, radius));
-        }
-
         private Quaternion GetRandomRot()
         {
             return Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+        }
+
+        private Vector3 GetRandomPos(float maxRange=5.0f, float maxAdjust=0.8f)
+        {
+            Quaternion randomRot = Quaternion.Euler(0.0f, UnityEngine.Random.Range(0f, 360f), 0.0f);
+
+            Vector3 randomVec = Vector3.forward.RotateAround(Vector3.up, randomRot);
+            Debug.Log(randomRot);
+            Debug.Log(randomVec);
+            RaycastHit hitInfo;
+            if (!Physics.Raycast(transform.position, transform.TransformPoint(randomVec), out hitInfo, maxRange))
+                hitInfo.point = transform.position + maxRange * (transform.TransformPoint(randomVec) - transform.position);
+            Debug.Log(hitInfo.point);
+            Vector3 randomPos = transform.InverseTransformPoint(hitInfo.point) * UnityEngine.Random.Range(0f, maxAdjust);
+
+            return randomPos;
         }
     }
 }
