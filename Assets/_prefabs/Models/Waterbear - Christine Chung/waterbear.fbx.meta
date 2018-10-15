@@ -1,0 +1,269 @@
+fileFormatVersion: 2
+guid: 321a61f15ed1d904aa5641de056d1d62
+timeCreated: 1529054101
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Camera
+    100004: Cylinder
+    100006: HeadB
+    100008: HeadB_end
+    100010: HeadF
+    100012: HeadF_end
+    100014: HipB
+    100016: HipF
+    100018: Lamp
+    100020: LegBBL
+    100022: LegBBL_end
+    100024: LegBBR
+    100026: LegBBR_end
+    100028: LegBFL
+    100030: LegBFL_end
+    100032: LegBFR
+    100034: LegBFR_end
+    100036: LegFBL
+    100038: LegFBL_end
+    100040: LegFBR
+    100042: LegFBR_end
+    100044: LegFFL
+    100046: LegFFL_end
+    100048: LegFFR
+    100050: LegFFR_end
+    100052: NeckB
+    100054: NeckF
+    100056: ShoulderBBL
+    100058: ShoulderBBR
+    100060: ShoulderBFL
+    100062: ShoulderBFR
+    100064: ShoulderFBL
+    100066: ShoulderFBR
+    100068: ShoulderFFL
+    100070: ShoulderFFR
+    100072: SpineB
+    100074: SpineF
+    100076: Sun
+    100078: //RootNode
+    400000: Armature
+    400002: Camera
+    400004: Cylinder
+    400006: HeadB
+    400008: HeadB_end
+    400010: HeadF
+    400012: HeadF_end
+    400014: HipB
+    400016: HipF
+    400018: Lamp
+    400020: LegBBL
+    400022: LegBBL_end
+    400024: LegBBR
+    400026: LegBBR_end
+    400028: LegBFL
+    400030: LegBFL_end
+    400032: LegBFR
+    400034: LegBFR_end
+    400036: LegFBL
+    400038: LegFBL_end
+    400040: LegFBR
+    400042: LegFBR_end
+    400044: LegFFL
+    400046: LegFFL_end
+    400048: LegFFR
+    400050: LegFFR_end
+    400052: NeckB
+    400054: NeckF
+    400056: ShoulderBBL
+    400058: ShoulderBBR
+    400060: ShoulderBFL
+    400062: ShoulderBFR
+    400064: ShoulderFBL
+    400066: ShoulderFBR
+    400068: ShoulderFFL
+    400070: ShoulderFFR
+    400072: SpineB
+    400074: SpineF
+    400076: Sun
+    400078: //RootNode
+    4300000: Cylinder
+    7400000: Armature|ArmatureAction
+    9500000: //RootNode
+    13700000: Cylinder
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|ArmatureAction
+      takeName: Armature|ArmatureAction
+      firstFrame: 0
+      lastFrame: 71
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/HipB
+        weight: 1
+      - path: Armature/HipB/ShoulderBBL
+        weight: 1
+      - path: Armature/HipB/ShoulderBBL/LegBBL
+        weight: 1
+      - path: Armature/HipB/ShoulderBBL/LegBBL/LegBBL_end
+        weight: 1
+      - path: Armature/HipB/ShoulderBBR
+        weight: 1
+      - path: Armature/HipB/ShoulderBBR/LegBBR
+        weight: 1
+      - path: Armature/HipB/ShoulderBBR/LegBBR/LegBBR_end
+        weight: 1
+      - path: Armature/HipB/SpineB
+        weight: 1
+      - path: Armature/HipB/SpineB/NeckB
+        weight: 1
+      - path: Armature/HipB/SpineB/NeckB/HeadB
+        weight: 1
+      - path: Armature/HipB/SpineB/NeckB/HeadB/HeadB_end
+        weight: 1
+      - path: Armature/HipB/SpineB/ShoulderBFL
+        weight: 1
+      - path: Armature/HipB/SpineB/ShoulderBFL/LegBFL
+        weight: 1
+      - path: Armature/HipB/SpineB/ShoulderBFL/LegBFL/LegBFL_end
+        weight: 1
+      - path: Armature/HipB/SpineB/ShoulderBFR
+        weight: 1
+      - path: Armature/HipB/SpineB/ShoulderBFR/LegBFR
+        weight: 1
+      - path: Armature/HipB/SpineB/ShoulderBFR/LegBFR/LegBFR_end
+        weight: 1
+      - path: Armature/HipF
+        weight: 1
+      - path: Armature/HipF/ShoulderFBL
+        weight: 1
+      - path: Armature/HipF/ShoulderFBL/LegFBL
+        weight: 1
+      - path: Armature/HipF/ShoulderFBL/LegFBL/LegFBL_end
+        weight: 1
+      - path: Armature/HipF/ShoulderFBR
+        weight: 1
+      - path: Armature/HipF/ShoulderFBR/LegFBR
+        weight: 1
+      - path: Armature/HipF/ShoulderFBR/LegFBR/LegFBR_end
+        weight: 1
+      - path: Armature/HipF/SpineF
+        weight: 1
+      - path: Armature/HipF/SpineF/NeckF
+        weight: 1
+      - path: Armature/HipF/SpineF/NeckF/HeadF
+        weight: 1
+      - path: Armature/HipF/SpineF/NeckF/HeadF/HeadF_end
+        weight: 1
+      - path: Armature/HipF/SpineF/ShoulderFFL
+        weight: 1
+      - path: Armature/HipF/SpineF/ShoulderFFL/LegFFL
+        weight: 1
+      - path: Armature/HipF/SpineF/ShoulderFFL/LegFFL/LegFFL_end
+        weight: 1
+      - path: Armature/HipF/SpineF/ShoulderFFR
+        weight: 1
+      - path: Armature/HipF/SpineF/ShoulderFFR/LegFFR
+        weight: 1
+      - path: Armature/HipF/SpineF/ShoulderFFR/LegFFR/LegFFR_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Cylinder
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Sun
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

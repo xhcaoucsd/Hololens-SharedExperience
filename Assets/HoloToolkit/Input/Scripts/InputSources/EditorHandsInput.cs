@@ -47,6 +47,7 @@ namespace HoloToolkit.Unity.InputModule
             public Vector3 CumulativeDelta;
         }
 
+
         private ManualHandControl manualHandControl;
 
         /// <summary>

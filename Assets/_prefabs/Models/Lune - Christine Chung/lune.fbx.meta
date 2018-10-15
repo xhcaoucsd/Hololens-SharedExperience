@@ -1,0 +1,764 @@
+fileFormatVersion: 2
+guid: 8d3cf859997b4e54b9d9a7e121d0af4e
+timeCreated: 1529054130
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Camera
+    100004: Chest
+    100006: EyeConL
+    100008: EyeConL_end
+    100010: EyeConM
+    100012: EyeConM_end
+    100014: EyeConR
+    100016: EyeConR_end
+    100018: EyeL
+    100020: EyeL 1
+    100022: EyeL_end
+    100024: eyelidBotL
+    100026: eyelidBotL1
+    100028: eyelidBotL1_end
+    100030: eyelidBotL1b
+    100032: eyelidBotL1b_end
+    100034: eyelidBotL2
+    100036: eyelidBotL2_end
+    100038: eyelidBotL2b
+    100040: eyelidBotL2b_end
+    100042: eyelidBotL3
+    100044: eyelidBotL3_end
+    100046: eyelidBotL3b
+    100048: eyelidBotL3b_end
+    100050: eyelidBotL4
+    100052: eyelidBotL4_end
+    100054: eyelidBotL4b
+    100056: eyelidBotL4b_end
+    100058: eyelidBotL5
+    100060: eyelidBotL5_end
+    100062: eyelidBotL5b
+    100064: eyelidBotL5b_end
+    100066: eyelidTopL
+    100068: eyelidTopL1
+    100070: eyelidTopL1_end
+    100072: eyelidTopL1b
+    100074: eyelidTopL1b_end
+    100076: eyelidTopL2
+    100078: eyelidTopL2_end
+    100080: eyelidTopL2b
+    100082: eyelidTopL2b_end
+    100084: eyelidTopL3
+    100086: eyelidTopL3_end
+    100088: eyelidTopL3b
+    100090: eyelidTopL3b_end
+    100092: eyelidTopL4
+    100094: eyelidTopL4_end
+    100096: eyelidTopL4b
+    100098: eyelidTopL4b_end
+    100100: eyelidTopL5
+    100102: eyelidTopL5_end
+    100104: eyelidTopL5b
+    100106: eyelidTopL5b_end
+    100108: EyeM
+    100110: EyeM 1
+    100112: EyeM_end
+    100114: EyeR
+    100116: EyeR 1
+    100118: EyeR_end
+    100120: FootBL
+    100122: FootBL_end
+    100124: FootBR
+    100126: FootBR_end
+    100128: FootFL
+    100130: FootFL_end
+    100132: FootFR
+    100134: FootFR_end
+    100136: FurBody
+    100138: FurHead
+    100140: Head
+    100142: Hip
+    100144: Lamp
+    100146: LegBL
+    100148: LegBR
+    100150: LegConBL
+    100152: LegConBL_end
+    100154: LegConBR
+    100156: LegConBR_end
+    100158: LegControlFL
+    100160: LegControlFL_end
+    100162: LegControlFR
+    100164: LegControlFR_end
+    100166: LegFL
+    100168: LegFR
+    100170: LowerLegBL
+    100172: LowerLegBR
+    100174: LowerLegConBL
+    100176: LowerLegConBL_end
+    100178: LowerLegConBR
+    100180: LowerLegConBR_end
+    100182: LowerLegControlFL
+    100184: LowerLegControlFL_end
+    100186: LowerLegControlFR
+    100188: LowerLegControlFR_end
+    100190: LowerLegFL
+    100192: LowerLegFR
+    100194: //RootNode
+    100196: MainEyeController
+    100198: Neck
+    100200: Plane
+    100202: Sun
+    400000: Armature
+    400002: Camera
+    400004: Chest
+    400006: EyeConL
+    400008: EyeConL_end
+    400010: EyeConM
+    400012: EyeConM_end
+    400014: EyeConR
+    400016: EyeConR_end
+    400018: EyeL
+    400020: EyeL 1
+    400022: EyeL_end
+    400024: eyelidBotL
+    400026: eyelidBotL1
+    400028: eyelidBotL1_end
+    400030: eyelidBotL1b
+    400032: eyelidBotL1b_end
+    400034: eyelidBotL2
+    400036: eyelidBotL2_end
+    400038: eyelidBotL2b
+    400040: eyelidBotL2b_end
+    400042: eyelidBotL3
+    400044: eyelidBotL3_end
+    400046: eyelidBotL3b
+    400048: eyelidBotL3b_end
+    400050: eyelidBotL4
+    400052: eyelidBotL4_end
+    400054: eyelidBotL4b
+    400056: eyelidBotL4b_end
+    400058: eyelidBotL5
+    400060: eyelidBotL5_end
+    400062: eyelidBotL5b
+    400064: eyelidBotL5b_end
+    400066: eyelidTopL
+    400068: eyelidTopL1
+    400070: eyelidTopL1_end
+    400072: eyelidTopL1b
+    400074: eyelidTopL1b_end
+    400076: eyelidTopL2
+    400078: eyelidTopL2_end
+    400080: eyelidTopL2b
+    400082: eyelidTopL2b_end
+    400084: eyelidTopL3
+    400086: eyelidTopL3_end
+    400088: eyelidTopL3b
+    400090: eyelidTopL3b_end
+    400092: eyelidTopL4
+    400094: eyelidTopL4_end
+    400096: eyelidTopL4b
+    400098: eyelidTopL4b_end
+    400100: eyelidTopL5
+    400102: eyelidTopL5_end
+    400104: eyelidTopL5b
+    400106: eyelidTopL5b_end
+    400108: EyeM
+    400110: EyeM 1
+    400112: EyeM_end
+    400114: EyeR
+    400116: EyeR 1
+    400118: EyeR_end
+    400120: FootBL
+    400122: FootBL_end
+    400124: FootBR
+    400126: FootBR_end
+    400128: FootFL
+    400130: FootFL_end
+    400132: FootFR
+    400134: FootFR_end
+    400136: FurBody
+    400138: FurHead
+    400140: Head
+    400142: Hip
+    400144: Lamp
+    400146: LegBL
+    400148: LegBR
+    400150: LegConBL
+    400152: LegConBL_end
+    400154: LegConBR
+    400156: LegConBR_end
+    400158: LegControlFL
+    400160: LegControlFL_end
+    400162: LegControlFR
+    400164: LegControlFR_end
+    400166: LegFL
+    400168: LegFR
+    400170: LowerLegBL
+    400172: LowerLegBR
+    400174: LowerLegConBL
+    400176: LowerLegConBL_end
+    400178: LowerLegConBR
+    400180: LowerLegConBR_end
+    400182: LowerLegControlFL
+    400184: LowerLegControlFL_end
+    400186: LowerLegControlFR
+    400188: LowerLegControlFR_end
+    400190: LowerLegFL
+    400192: LowerLegFR
+    400194: //RootNode
+    400196: MainEyeController
+    400198: Neck
+    400200: Plane
+    400202: Sun
+    2300000: EyeL 1
+    2300002: EyeM 1
+    2300004: EyeR 1
+    3300000: EyeL 1
+    3300002: EyeM 1
+    3300004: EyeR 1
+    4300000: EyeL
+    4300002: EyeR
+    4300004: EyeM
+    4300006: FurBody
+    4300008: FurHead
+    4300010: Plane
+    7400000: Armature|ArmatureAction
+    7400002: Armature|ArmatureAction.001
+    7400004: Armature|ArmatureAction1
+    9500000: //RootNode
+    13700000: FurBody
+    13700002: FurHead
+    13700004: Plane
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|ArmatureAction1
+      takeName: Armature|ArmatureAction.001
+      firstFrame: 0
+      lastFrame: 53
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Hip
+        weight: 1
+      - path: Armature/Hip/Chest
+        weight: 1
+      - path: Armature/Hip/Chest/Neck
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeL/EyeL 1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeL/EyeL_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL1/eyelidBotL1_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL2
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL2/eyelidBotL2_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL3
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL3/eyelidBotL3_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL4
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL4/eyelidBotL4_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL5
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL5/eyelidBotL5_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL1b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL1b/eyelidBotL1b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL2b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL2b/eyelidBotL2b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL3b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL3b/eyelidBotL3b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL4b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL4b/eyelidBotL4b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL5b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL5b/eyelidBotL5b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL1/eyelidTopL1_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL2
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL2/eyelidTopL2_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL3
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL3/eyelidTopL3_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL4
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL4/eyelidTopL4_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL5
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL5/eyelidTopL5_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL1b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL1b/eyelidTopL1b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL2b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL2b/eyelidTopL2b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL3b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL3b/eyelidTopL3b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL4b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL4b/eyelidTopL4b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL5b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL5b/eyelidTopL5b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeM
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeM/EyeM 1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeM/EyeM_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeR
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeR/EyeR 1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeR/EyeR_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConL/EyeConL_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConM
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConM/EyeConM_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConR
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConR/EyeConR_end
+        weight: 1
+      - path: Armature/LegBL
+        weight: 1
+      - path: Armature/LegBL/LowerLegBL
+        weight: 1
+      - path: Armature/LegBL/LowerLegBL/FootBL
+        weight: 1
+      - path: Armature/LegBL/LowerLegBL/FootBL/FootBL_end
+        weight: 1
+      - path: Armature/LegBR
+        weight: 1
+      - path: Armature/LegBR/LowerLegBR
+        weight: 1
+      - path: Armature/LegBR/LowerLegBR/FootBR
+        weight: 1
+      - path: Armature/LegBR/LowerLegBR/FootBR/FootBR_end
+        weight: 1
+      - path: Armature/LegConBL
+        weight: 1
+      - path: Armature/LegConBL/LegConBL_end
+        weight: 1
+      - path: Armature/LegConBR
+        weight: 1
+      - path: Armature/LegConBR/LegConBR_end
+        weight: 1
+      - path: Armature/LegControlFL
+        weight: 1
+      - path: Armature/LegControlFL/LegControlFL_end
+        weight: 1
+      - path: Armature/LegControlFR
+        weight: 1
+      - path: Armature/LegControlFR/LegControlFR_end
+        weight: 1
+      - path: Armature/LegFL
+        weight: 1
+      - path: Armature/LegFL/LowerLegFL
+        weight: 1
+      - path: Armature/LegFL/LowerLegFL/FootFL
+        weight: 1
+      - path: Armature/LegFL/LowerLegFL/FootFL/FootFL_end
+        weight: 1
+      - path: Armature/LegFR
+        weight: 1
+      - path: Armature/LegFR/LowerLegFR
+        weight: 1
+      - path: Armature/LegFR/LowerLegFR/FootFR
+        weight: 1
+      - path: Armature/LegFR/LowerLegFR/FootFR/FootFR_end
+        weight: 1
+      - path: Armature/LowerLegConBL
+        weight: 1
+      - path: Armature/LowerLegConBL/LowerLegConBL_end
+        weight: 1
+      - path: Armature/LowerLegConBR
+        weight: 1
+      - path: Armature/LowerLegConBR/LowerLegConBR_end
+        weight: 1
+      - path: Armature/LowerLegControlFL
+        weight: 1
+      - path: Armature/LowerLegControlFL/LowerLegControlFL_end
+        weight: 1
+      - path: Armature/LowerLegControlFR
+        weight: 1
+      - path: Armature/LowerLegControlFR/LowerLegControlFR_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: FurBody
+        weight: 1
+      - path: FurHead
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Plane
+        weight: 1
+      - path: Sun
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|ArmatureAction.001
+      takeName: Armature|ArmatureAction.001
+      firstFrame: 0
+      lastFrame: 53
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Hip
+        weight: 1
+      - path: Armature/Hip/Chest
+        weight: 1
+      - path: Armature/Hip/Chest/Neck
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeL/EyeL 1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeL/EyeL_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL1/eyelidBotL1_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL2
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL2/eyelidBotL2_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL3
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL3/eyelidBotL3_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL4
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL4/eyelidBotL4_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL5
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL/eyelidBotL5/eyelidBotL5_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL1b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL1b/eyelidBotL1b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL2b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL2b/eyelidBotL2b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL3b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL3b/eyelidBotL3b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL4b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL4b/eyelidBotL4b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL5b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidBotL5b/eyelidBotL5b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL1/eyelidTopL1_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL2
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL2/eyelidTopL2_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL3
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL3/eyelidTopL3_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL4
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL4/eyelidTopL4_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL5
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL/eyelidTopL5/eyelidTopL5_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL1b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL1b/eyelidTopL1b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL2b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL2b/eyelidTopL2b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL3b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL3b/eyelidTopL3b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL4b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL4b/eyelidTopL4b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL5b
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/eyelidTopL5b/eyelidTopL5b_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeM
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeM/EyeM 1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeM/EyeM_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeR
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeR/EyeR 1
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/EyeR/EyeR_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConL
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConL/EyeConL_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConM
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConM/EyeConM_end
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConR
+        weight: 1
+      - path: Armature/Hip/Chest/Neck/Head/MainEyeController/EyeConR/EyeConR_end
+        weight: 1
+      - path: Armature/LegBL
+        weight: 1
+      - path: Armature/LegBL/LowerLegBL
+        weight: 1
+      - path: Armature/LegBL/LowerLegBL/FootBL
+        weight: 1
+      - path: Armature/LegBL/LowerLegBL/FootBL/FootBL_end
+        weight: 1
+      - path: Armature/LegBR
+        weight: 1
+      - path: Armature/LegBR/LowerLegBR
+        weight: 1
+      - path: Armature/LegBR/LowerLegBR/FootBR
+        weight: 1
+      - path: Armature/LegBR/LowerLegBR/FootBR/FootBR_end
+        weight: 1
+      - path: Armature/LegConBL
+        weight: 1
+      - path: Armature/LegConBL/LegConBL_end
+        weight: 1
+      - path: Armature/LegConBR
+        weight: 1
+      - path: Armature/LegConBR/LegConBR_end
+        weight: 1
+      - path: Armature/LegControlFL
+        weight: 1
+      - path: Armature/LegControlFL/LegControlFL_end
+        weight: 1
+      - path: Armature/LegControlFR
+        weight: 1
+      - path: Armature/LegControlFR/LegControlFR_end
+        weight: 1
+      - path: Armature/LegFL
+        weight: 1
+      - path: Armature/LegFL/LowerLegFL
+        weight: 1
+      - path: Armature/LegFL/LowerLegFL/FootFL
+        weight: 1
+      - path: Armature/LegFL/LowerLegFL/FootFL/FootFL_end
+        weight: 1
+      - path: Armature/LegFR
+        weight: 1
+      - path: Armature/LegFR/LowerLegFR
+        weight: 1
+      - path: Armature/LegFR/LowerLegFR/FootFR
+        weight: 1
+      - path: Armature/LegFR/LowerLegFR/FootFR/FootFR_end
+        weight: 1
+      - path: Armature/LowerLegConBL
+        weight: 1
+      - path: Armature/LowerLegConBL/LowerLegConBL_end
+        weight: 1
+      - path: Armature/LowerLegConBR
+        weight: 1
+      - path: Armature/LowerLegConBR/LowerLegConBR_end
+        weight: 1
+      - path: Armature/LowerLegControlFL
+        weight: 1
+      - path: Armature/LowerLegControlFL/LowerLegControlFL_end
+        weight: 1
+      - path: Armature/LowerLegControlFR
+        weight: 1
+      - path: Armature/LowerLegControlFR/LowerLegControlFR_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: FurBody
+        weight: 1
+      - path: FurHead
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: Plane
+        weight: 1
+      - path: Sun
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

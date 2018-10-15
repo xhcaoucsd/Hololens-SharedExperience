@@ -1,0 +1,476 @@
+fileFormatVersion: 2
+guid: ca9d516ea4af4ef438728b77ae7ca2fa
+timeCreated: 1529054133
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Head
+    100004: Head_end
+    100006: //RootNode
+    100008: L.Arm1
+    100010: L.Arm2
+    100012: L.Arm3
+    100014: L.Arm3_end
+    100016: L.Leg1
+    100018: L.Leg2
+    100020: L.Leg2_end
+    100022: Neck
+    100024: Plane
+    100026: R.Arm1.001
+    100028: R.Arm2
+    100030: R.Arm3.001
+    100032: R.Arm3.001_end
+    100034: R.Leg1
+    100036: R.Leg2
+    100038: R.Leg2_end
+    100040: Spine1
+    100042: Spine2
+    100044: Spine3
+    100046: Tail1
+    100048: Tail2
+    100050: Tail3
+    100052: Tail4
+    100054: Tail4_end
+    400000: Armature
+    400002: Head
+    400004: Head_end
+    400006: //RootNode
+    400008: L.Arm1
+    400010: L.Arm2
+    400012: L.Arm3
+    400014: L.Arm3_end
+    400016: L.Leg1
+    400018: L.Leg2
+    400020: L.Leg2_end
+    400022: Neck
+    400024: Plane
+    400026: R.Arm1.001
+    400028: R.Arm2
+    400030: R.Arm3.001
+    400032: R.Arm3.001_end
+    400034: R.Leg1
+    400036: R.Leg2
+    400038: R.Leg2_end
+    400040: Spine1
+    400042: Spine2
+    400044: Spine3
+    400046: Tail1
+    400048: Tail2
+    400050: Tail3
+    400052: Tail4
+    400054: Tail4_end
+    4300000: Plane
+    7400000: Armature|Jumping
+    7400002: Armature|Standing
+    7400004: Armature|Walking
+    7400006: Armature|Walking.002
+    9500000: //RootNode
+    13700000: Plane
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|Jumping
+      takeName: Armature|Jumping
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Tail1
+        weight: 1
+      - path: Armature/Tail1/Spine1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2/L.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2/R.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3/L.Arm3_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001/R.Arm3.001_end
+        weight: 1
+      - path: Armature/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4/Tail4_end
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Standing
+      takeName: Armature|Standing
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Tail1
+        weight: 1
+      - path: Armature/Tail1/Spine1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2/L.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2/R.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3/L.Arm3_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001/R.Arm3.001_end
+        weight: 1
+      - path: Armature/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4/Tail4_end
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Walking
+      takeName: Armature|Walking
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Tail1
+        weight: 1
+      - path: Armature/Tail1/Spine1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2/L.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2/R.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3/L.Arm3_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001/R.Arm3.001_end
+        weight: 1
+      - path: Armature/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4/Tail4_end
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Walking.002
+      takeName: Armature|Walking.002
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Tail1
+        weight: 1
+      - path: Armature/Tail1/Spine1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/L.Leg1/L.Leg2/L.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2
+        weight: 1
+      - path: Armature/Tail1/Spine1/R.Leg1/R.Leg2/R.Leg2_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/L.Arm1/L.Arm2/L.Arm3/L.Arm3_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/Neck/Head/Head_end
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001
+        weight: 1
+      - path: Armature/Tail1/Spine1/Spine2/Spine3/R.Arm1.001/R.Arm2/R.Arm3.001/R.Arm3.001_end
+        weight: 1
+      - path: Armature/Tail1/Tail2
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4
+        weight: 1
+      - path: Armature/Tail1/Tail2/Tail3/Tail4/Tail4_end
+        weight: 1
+      - path: Plane
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

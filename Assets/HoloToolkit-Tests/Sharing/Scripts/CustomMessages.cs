@@ -20,9 +20,7 @@ namespace HoloToolkit.Sharing.Tests
         /// </summary>
         public enum TestMessageID : byte
         {
-            HeadTransform = MessageID.UserMessageIDStart,
-            GameMaster,
-            SpawnTarget,
+            GameMaster = MessageID.UserMessageIDStart,
             TargetCollision,
             InitializeGame,
             TerminateGame,
@@ -30,7 +28,22 @@ namespace HoloToolkit.Sharing.Tests
             EndPrelude,
             EndInterlude,
             EndRound,
-            SafeSignal,
+            RoundInterval,
+            PlayClip,
+            StopClip,
+            SpawnObject,
+            DestroyObject,
+            PosObject,
+            RotObject,
+            ScaleObject,
+            ApplyVelocity,
+            ApplyAngVelocity,
+            ChangeMaterial,
+            LoadMaterial,
+            ChangeMesh,
+            SetActive,
+            ShowGallery,
+            ShowLobby,
             Max
         }
 
@@ -110,7 +123,7 @@ namespace HoloToolkit.Sharing.Tests
             // Cache the local user ID
             LocalUserID = SharingStage.Instance.Manager.GetLocalUser().GetID();
 
-            for (byte index = (byte)TestMessageID.HeadTransform; index < (byte)TestMessageID.Max; index++)
+            for (byte index = (byte)TestMessageID.GameMaster; index < (byte)TestMessageID.Max; index++)
             {
                 if (MessageHandlers.ContainsKey((TestMessageID)index) == false)
                 {
@@ -130,17 +143,285 @@ namespace HoloToolkit.Sharing.Tests
             return msg;
         }
 
-        public void SendHeadTransform(Vector3 position, Quaternion rotation)
+        public void SendPlayClip(string sourceID, int clip)
         {
             // If we are connected to a session, broadcast our head info
             if (serverConnection != null && serverConnection.IsConnected())
             {
                 // Create an outgoing network message to contain all the info we want to send
-                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.HeadTransform);
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.PlayClip);
 
-                AppendTransform(msg, position, rotation);
+                msg.Write(new XString(sourceID));
+                msg.Write(clip);
 
                 // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendStopClip(string sourceID)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.StopClip);
+
+                msg.Write(new XString(sourceID));
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendSpawnObject(string objectID, int prefab)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SpawnObject);
+
+                msg.Write(new XString(objectID));
+                msg.Write(prefab);
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendDestroyObject(string objectID)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.DestroyObject);
+
+                msg.Write(new XString(objectID));
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendPosObject(string objectID, Vector3 position)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.PosObject);
+
+                msg.Write(new XString(objectID));
+                AppendVector3(msg, position);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendRotObject(string objectID, Quaternion rotation)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.RotObject);
+
+                msg.Write(new XString(objectID));
+                AppendQuaternion(msg, rotation);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendScaleObject(string objectID, Vector3 scale)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ScaleObject);
+
+                msg.Write(new XString(objectID));
+                AppendVector3(msg, scale);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendApplyVelocity(string objectID, Vector3 velocity)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ApplyVelocity);
+
+                msg.Write(new XString(objectID));
+                AppendVector3(msg, velocity);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendApplyAngVelocity(string objectID, Vector3 angvelocity)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ApplyAngVelocity);
+
+                msg.Write(new XString(objectID));
+                AppendVector3(msg, angvelocity);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendChangeMaterial(string objectID, int mat)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ChangeMaterial);
+
+                msg.Write(new XString(objectID));
+                msg.Write(mat);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendLoadMaterial(string objectID, string mat)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.LoadMaterial);
+
+                msg.Write(new XString(objectID));
+                msg.Write(new XString(mat));
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendChangeMesh(string objectID, int mesh)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ChangeMesh);
+
+                msg.Write(new XString(objectID));
+                msg.Write(mesh);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendSetActive(string objectID, int active)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SetActive);
+
+                msg.Write(new XString(objectID));
+                msg.Write(active);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendShowGallery()
+        {
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ShowGallery);
+
+                //msg.Write(userID);
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendShowLobby()
+        {
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ShowLobby);
+
+                //msg.Write(userID);
                 serverConnection.Broadcast(
                     msg,
                     MessagePriority.Immediate,
@@ -154,23 +435,6 @@ namespace HoloToolkit.Sharing.Tests
             if (serverConnection != null && serverConnection.IsConnected())
             {
                 NetworkOutMessage msg = CreateMessage((byte)TestMessageID.GameMaster);
-
-                //msg.Write(userID);
-                serverConnection.Broadcast(
-                    msg,
-                    MessagePriority.Immediate,
-                    MessageReliability.UnreliableSequenced,
-                    MessageChannel.Avatar);
-            }
-        }
-
-        public void SendSpawnTarget(Vector3 spawnPosition, Quaternion spawnRotation)
-        {
-            if (serverConnection != null && serverConnection.IsConnected())
-            {
-                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SpawnTarget);
-
-                AppendTransform(msg, spawnPosition, spawnRotation);
 
                 //msg.Write(userID);
                 serverConnection.Broadcast(
@@ -261,11 +525,9 @@ namespace HoloToolkit.Sharing.Tests
                 MessageChannel.Avatar);
         }
 
-        public void SendSafeSignal (long playerID)
+        public void SendRoundInterval()
         {
-            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SafeSignal);
-
-            msg.Write(playerID);
+            NetworkOutMessage msg = CreateMessage((byte)TestMessageID.RoundInterval);
 
             serverConnection.Broadcast(
                 msg,
@@ -274,14 +536,13 @@ namespace HoloToolkit.Sharing.Tests
                 MessageChannel.Avatar);
         }
 
-
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
             if (serverConnection != null)
             {
-                for (byte index = (byte)TestMessageID.HeadTransform; index < (byte)TestMessageID.Max; index++)
+                for (byte index = (byte)TestMessageID.GameMaster; index < (byte)TestMessageID.Max; index++)
                 {
                     serverConnection.RemoveListener(index, connectionAdapter);
                 }

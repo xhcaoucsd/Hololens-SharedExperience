@@ -15496,7 +15496,7 @@
       "projectPath": "C:\\Users\\ARtSSt\\Desktop\\xianhaicao\\Shared-Experience-CTF\\App\\GeneratedProjects\\UWP\\Assembly-CSharp-firstpass\\Assembly-CSharp-firstpass.csproj",
       "projectJsonPath": "C:\\Users\\ARtSSt\\Desktop\\xianhaicao\\Shared-Experience-CTF\\App\\GeneratedProjects\\UWP\\Assembly-CSharp-firstpass\\project.json",
       "packagesPath": "C:\\Users\\ARtSSt\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ARtSSt\\Desktop\\xianhaicao\\Shared-Experience-CTF\\App\\GeneratedProjects\\UWP\\Assembly-CSharp-firstpass\\obj\\x86\\Release\\",
+      "outputPath": "C:\\Users\\ARtSSt\\Desktop\\xianhaicao\\Shared-Experience-CTF\\App\\GeneratedProjects\\UWP\\Assembly-CSharp-firstpass\\obj\\ARM\\Debug\\",
       "projectStyle": "ProjectJson",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\"

@@ -1,0 +1,133 @@
+fileFormatVersion: 2
+guid: 29611d99397943a43af0a0ea4015a648
+timeCreated: 1529054101
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: //RootNode
+    100004: Chest
+    100006: Circle
+    100008: Head
+    100010: Head_end
+    100012: LeftLeg
+    100014: LeftLeg.001
+    100016: LeftLeg.001_end
+    100018: LeftLeg_end
+    100020: LeftThigh
+    100022: LeftThigh.001
+    100024: LeftThigh.001_end
+    100026: LeftWing
+    100028: LeftWing_end
+    100030: RightLeg
+    100032: RightLeg.001
+    100034: RightLeg.001_end
+    100036: RightLeg_end
+    100038: RightThigh
+    100040: RightThigh.001
+    100042: RightThigh.001_end
+    100044: RightWing
+    100046: RightWing_end
+    400000: Armature
+    400002: //RootNode
+    400004: Chest
+    400006: Circle
+    400008: Head
+    400010: Head_end
+    400012: LeftLeg
+    400014: LeftLeg.001
+    400016: LeftLeg.001_end
+    400018: LeftLeg_end
+    400020: LeftThigh
+    400022: LeftThigh.001
+    400024: LeftThigh.001_end
+    400026: LeftWing
+    400028: LeftWing_end
+    400030: RightLeg
+    400032: RightLeg.001
+    400034: RightLeg.001_end
+    400036: RightLeg_end
+    400038: RightThigh
+    400040: RightThigh.001
+    400042: RightThigh.001_end
+    400044: RightWing
+    400046: RightWing_end
+    4300000: Circle
+    7400000: Armature|Action
+    7400002: Armature|flying
+    7400004: Armature|Idle
+    7400006: Armature|Untitled
+    7400008: Armature|wave
+    9500000: //RootNode
+    13700000: Circle
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

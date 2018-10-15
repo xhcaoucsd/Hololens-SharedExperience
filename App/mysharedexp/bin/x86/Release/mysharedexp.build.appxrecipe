@@ -445,14 +445,20 @@
     <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\sharedassets0.assets">
       <PackagePath>Data\sharedassets0.assets</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\globalgamemanagers.assets.resS">
+      <PackagePath>Data\globalgamemanagers.assets.resS</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\resources.assets.resS">
+      <PackagePath>Data\resources.assets.resS</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\sharedassets0.assets.resS">
+      <PackagePath>Data\sharedassets0.assets.resS</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\managedAssemblies.txt">
       <PackagePath>Data\managedAssemblies.txt</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\nativePlugins.txt">
       <PackagePath>Data\nativePlugins.txt</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\sharedassets0.assets.resS">
-      <PackagePath>Data\sharedassets0.assets.resS</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ARtSSt\Desktop\xianhaicao\Shared-Experience-CTF\App\mysharedexp\Data\sharedassets0.resource">
       <PackagePath>Data\sharedassets0.resource</PackagePath>

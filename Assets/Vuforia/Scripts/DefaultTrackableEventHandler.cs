@@ -94,9 +94,10 @@ namespace Vuforia
             ChangeAnchorRotation();
             ChangeAnchorLocationCursor();
             SetGroundUsingObj();
-            positionText.text = "FOUND !!";
-            GameObject.FindGameObjectWithTag("spawner").GetComponent<SpatialMappingRenderer>().renderState = SpatialMappingRenderer.RenderState.None;
-
+            //positionText.text = "FOUND !!";
+            GameObject.FindGameObjectWithTag("spawner").GetComponent<SpatialMappingRenderer>().enabled = false;
+            //.renderState = SpatialMappingRenderer.RenderState.None;
+            GameObject.FindGameObjectWithTag("anchor").SetActive(true);
         }
 
 

@@ -13,6 +13,11 @@ TagManager:
   - manager
   - pos
   - player
+  - cube_model
+  - sphere_model
+  - capsule_model
+  - bullet
+  - red_model
   layers:
   - Default
   - TransparentFX
@@ -22,11 +27,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Target
+  - Bullet
+  - Wardrobe
+  - Model
   - 
   - 
   - 

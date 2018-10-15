@@ -1,0 +1,367 @@
+fileFormatVersion: 2
+guid: a66dc54c2d2f3b145943ee2e6b56eb85
+timeCreated: 1529054130
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Camera
+    100004: chest
+    100006: //RootNode
+    100008: foreArmL
+    100010: foreArmL_end
+    100012: foreArmR
+    100014: foreArmR_end
+    100016: head
+    100018: head_end
+    100020: hip
+    100022: lowerLegL
+    100024: lowerLegL_end
+    100026: lowerLegR
+    100028: lowerLegR_end
+    100030: neck
+    100032: Plane
+    100034: shoulderL
+    100036: shoulderR
+    100038: spine
+    100040: Sun
+    100042: upperArmL
+    100044: upperArmR
+    100046: upperLegL
+    100048: upperLegR
+    400000: Armature
+    400002: Camera
+    400004: chest
+    400006: //RootNode
+    400008: foreArmL
+    400010: foreArmL_end
+    400012: foreArmR
+    400014: foreArmR_end
+    400016: head
+    400018: head_end
+    400020: hip
+    400022: lowerLegL
+    400024: lowerLegL_end
+    400026: lowerLegR
+    400028: lowerLegR_end
+    400030: neck
+    400032: Plane
+    400034: shoulderL
+    400036: shoulderR
+    400038: spine
+    400040: Sun
+    400042: upperArmL
+    400044: upperArmR
+    400046: upperLegL
+    400048: upperLegR
+    4300000: Plane
+    7400000: Armature|interaction
+    7400002: Armature|Resting
+    7400004: Armature|Walking
+    9500000: //RootNode
+    13700000: Plane
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|interaction
+      takeName: Armature|interaction
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/hip
+        weight: 1
+      - path: Armature/hip/spine
+        weight: 1
+      - path: Armature/hip/spine/chest
+        weight: 1
+      - path: Armature/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/hip/spine/chest/neck/head/head_end
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL/foreArmL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL/foreArmL/foreArmL_end
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR/foreArmR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR/foreArmR/foreArmR_end
+        weight: 1
+      - path: Armature/hip/upperLegL
+        weight: 1
+      - path: Armature/hip/upperLegL/lowerLegL
+        weight: 1
+      - path: Armature/hip/upperLegL/lowerLegL/lowerLegL_end
+        weight: 1
+      - path: Armature/hip/upperLegR
+        weight: 1
+      - path: Armature/hip/upperLegR/lowerLegR
+        weight: 1
+      - path: Armature/hip/upperLegR/lowerLegR/lowerLegR_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Plane
+        weight: 1
+      - path: Sun
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Resting
+      takeName: Armature|Resting
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/hip
+        weight: 1
+      - path: Armature/hip/spine
+        weight: 1
+      - path: Armature/hip/spine/chest
+        weight: 1
+      - path: Armature/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/hip/spine/chest/neck/head/head_end
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL/foreArmL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL/foreArmL/foreArmL_end
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR/foreArmR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR/foreArmR/foreArmR_end
+        weight: 1
+      - path: Armature/hip/upperLegL
+        weight: 1
+      - path: Armature/hip/upperLegL/lowerLegL
+        weight: 1
+      - path: Armature/hip/upperLegL/lowerLegL/lowerLegL_end
+        weight: 1
+      - path: Armature/hip/upperLegR
+        weight: 1
+      - path: Armature/hip/upperLegR/lowerLegR
+        weight: 1
+      - path: Armature/hip/upperLegR/lowerLegR/lowerLegR_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Plane
+        weight: 1
+      - path: Sun
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Walking
+      takeName: Armature|Walking
+      firstFrame: 0
+      lastFrame: 72
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/hip
+        weight: 1
+      - path: Armature/hip/spine
+        weight: 1
+      - path: Armature/hip/spine/chest
+        weight: 1
+      - path: Armature/hip/spine/chest/neck
+        weight: 1
+      - path: Armature/hip/spine/chest/neck/head
+        weight: 1
+      - path: Armature/hip/spine/chest/neck/head/head_end
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL/foreArmL
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderL/upperArmL/foreArmL/foreArmL_end
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR/foreArmR
+        weight: 1
+      - path: Armature/hip/spine/chest/shoulderR/upperArmR/foreArmR/foreArmR_end
+        weight: 1
+      - path: Armature/hip/upperLegL
+        weight: 1
+      - path: Armature/hip/upperLegL/lowerLegL
+        weight: 1
+      - path: Armature/hip/upperLegL/lowerLegL/lowerLegL_end
+        weight: 1
+      - path: Armature/hip/upperLegR
+        weight: 1
+      - path: Armature/hip/upperLegR/lowerLegR
+        weight: 1
+      - path: Armature/hip/upperLegR/lowerLegR/lowerLegR_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Plane
+        weight: 1
+      - path: Sun
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

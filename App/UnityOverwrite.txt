@@ -11,7 +11,7 @@ GeneratedProjects\UWP\Assembly-CSharp-firstpass\project.json: 4FCF72A4D5EDB37E24
 mysharedexp\App.cs: modified
 mysharedexp\mysharedexp.csproj: modified
 mysharedexp\mysharedexp.csproj.user: modified
-mysharedexp\Package.appxmanifest: 8CD2CDACC3F0E53251D8007C10EDAAAD
+mysharedexp\Package.appxmanifest: AEA5BA91599FF1DDC0F96F0F81AB5018
 mysharedexp\project.json: 1D02BC64BAC0D041019673A1C4C51737
 mysharedexp\Assets\SplashScreen.scale-200.png: 60618416282ED104FD1473935716045D
 mysharedexp\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084

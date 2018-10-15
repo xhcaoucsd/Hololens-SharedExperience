@@ -15,58 +15,83 @@ namespace HoloToolkit.Sharing.Tests
     /// Performs all functions of 'musical chairs' game by designating a Game Master player and sending messages
     /// between players and the game master. Add to this later
     /// </summary>
-    public class GameManager : Singleton<GameManager>, ISpeechHandler
+    public class GameManager : Singleton<GameManager>, ISpeechHandler, IInputClickHandler
     {
+        // CONSTANTS
         private readonly int PRELUDE = 0;
         private readonly int INTERLUDE = 1;
         private readonly int POSTLUDE = 2;
+        private readonly int ROUND_INTERVAL = 3;
+        private readonly int COUNTDOWN = 3;
+        private readonly float MODEL_RANGE = 3.0f;
 
-        /// <summary>
-        /// Contains information on a player in the game. ID used to identify player when actions happen
-        /// and PlayerObject contains info on the player's rendered object in Unity (position, prefab, etc)
-        /// </summary>
-        public class PlayerInfo
+        private readonly string TARGET_ID = "target";
+        private readonly string PLAYER_ID = "player";
+        private readonly string WARDROBE_ID = "wardrobe";
+        private readonly string BULLET_ID = "bullet";
+        private readonly string CAMERA_ID = "camera_main";
+        private readonly string GALLERY_ID = "gallery";
+
+        // PUBLIC
+        public Material materialTargetCollided; // material of the collision object (in this case the capsule) when something collides with it
+
+        public float targetSpawnRadius = 5f; // radius in which collision object can be spawned (currently 3)
+        public float targetRotSpeed = 30f;
+        public float targetSpawnHeight = 4f;
+        public float targetDropSpeed = 0.8f;
+        public float delayPrelude = 5f; //currently 10
+        public float delayPostlude = 5f; //currently 10
+        public float delayRoundInterval = 5f;
+        public float bulletSpeed = 6.0f;
+
+        public AudioClip collisionClip;
+        public AudioClip successClip;
+        public AudioClip failClip;
+
+        public GameObject p_Target;
+
+        public RawImage displayPic;
+        public Image HUDimage;
+
+        public enum Images : int
         {
-            public long UserID;
-            public GameObject PlayerObject;
+            Count_1,
+            Count_2,
+            Count_3,
+            Survived,
+            Youreout,
+            RoundInterlude,
+            WinPic,
+            LosePic
         }
 
-        private long gameMasterID = 0;
-        public Material materialGameMaster; // material specifies who is the game master
-        public Material materialNormal;
-        public Material materialSurvived; // material of a survived player
-        public Material materialDead; // material of a dead player
-        public Material materialTargetCollided; // material of the collision object (in this case the capsule) when something collides with it
-        public float targetSpawnRadius; // radius in which collision object can be spawned (currently 3)
-        public float delayPrelude; //currently 10
-        public float delayPostlude; //currently 10
+        public List<Sprite> sprites;
 
-        public AudioClip preludeClip;
-        public AudioClip interludeClip;
-        public AudioClip postludeClip;
+        public bool Started { get; private set; }
 
-        public GameObject p_Target; 
-        public GameObject p_Player;
+        // Used to hold spawned gameobjects. Leave empty in inspector
+        public Dictionary<string, GameObject> sharedObjects = new Dictionary<string, GameObject>();
 
-        public Dictionary<long, PlayerInfo> remotePlayers = new Dictionary<long, PlayerInfo>(); // contains list of players connected to server
-        private Dictionary<string, GameObject> sharedObjects = new Dictionary<string, GameObject>(); 
+        // LOBBY VARS
+        private bool inGallery;
 
-        private PlayerInfo localPlayer; // PlayerInfo object for testing on local host (using our computer/unity instead of hololens)
-        private bool inGame; 
+        // GAME VARS
         private int gameState;
-        private bool playerOut;
+        private bool inGame;
+        private bool inCountdown;
         private int maxRounds;
         private int maxSafePlayers;
         private int completedRounds;
         private int playersTotal;
-        private int playersLeft;
         private float delayInterval;
+        private long gameMasterID = 0;
+        private long objectCount = 1; // used to uniquely identify some spawned objects
+
         private List<long> allPlayers; // list of all players
         private List<long> alivePlayers; // list of players still alive
         private List<long> safePlayers; // list of players who have entered the collision object in a current round
 
-        private bool resourceLocked = false;
-        private bool roundStarted = false;
+        
 
         private void Start()
         {
@@ -74,9 +99,7 @@ namespace HoloToolkit.Sharing.Tests
 
             // add handlers for each type of message sent
             // if a message is sent with that specific type, the corresponding handler method will be called
-            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.HeadTransform] = HandleUpdatePlayer;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.GameMaster] = HandleUpdateGameMaster;
-            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.SpawnTarget] = HandleSpawnTarget;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.TargetCollision] = HandleTargetCollision;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.InitializeGame] = HandleInitializeGame;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.TerminateGame] = HandleTerminateGame;
@@ -84,7 +107,9 @@ namespace HoloToolkit.Sharing.Tests
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndPrelude] = HandleEndPrelude;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndInterlude] = HandleEndInterlude;
             CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.EndRound] = HandleEndRound;
-            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.SafeSignal] = HandleSafeSignal;
+            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.RoundInterval] = HandleRoundInterval;
+            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.ShowGallery] = HandleShowGallery;
+            CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.ShowLobby] = HandleShowLobby;
 
             // SharingStage should be valid at this point, but we may not be connected.
             if (SharingStage.Instance.IsConnected)
@@ -96,187 +121,119 @@ namespace HoloToolkit.Sharing.Tests
                 SharingStage.Instance.SharingManagerConnected += Connected;
             }
 
-            // create PlayerInfo object for local player
-            localPlayer = new PlayerInfo();
-            // get ID for local player
-            localPlayer.UserID = SharingStage.Instance.Manager.GetLocalUser().GetID();
-            // create remote player version of local player to add to remotePlayers list
-            localPlayer.PlayerObject = CreateRemotePlayer();
-            // pass the local id to the gameobject
-            localPlayer.PlayerObject.GetComponent<Player>().PlayerID = localPlayer.UserID;
-            // putting local player in remote players list allows local player to be the same as a player connected wirelessly through the hololens
-            remotePlayers.Add(localPlayer.UserID, localPlayer);
+
 
             // initialize appropriate lists
             allPlayers = new List<long>();
             alivePlayers = new List<long>();
             safePlayers = new List<long>();
 
-            // each player starts with a display of their own ID (for testing purposes)
-            Debug.Log("Your ID: " + localPlayer.UserID);
-        }
-
-        private void Connected(object sender = null, EventArgs e = null)
-        {
-            SharingStage.Instance.SharingManagerConnected -= Connected;
-
-            SharingStage.Instance.SessionUsersTracker.UserJoined += UserJoinedSession;
-            SharingStage.Instance.SessionUsersTracker.UserLeft += UserLeftSession;
+            HUDimage.GetComponent<Image>().enabled = false;
         }
 
         // called 60(?) times a second to check progress of game and switch between game phases
         private void Update()
         {
-            // Grab the current head transform and broadcast it to all the other users in the session
-            Transform headTransform = Camera.main.transform;
+            if (!ObjectManager.Instance.Started
+                || !AudioManager.Instance.Started
+                || !HeadManager.Instance.Started)
+                return;
+            else if (!Started)
+                WorldSetup();
 
-            // Transform the head position and rotation from world space into local space
-            Vector3 headPosition = transform.InverseTransformPoint(headTransform.position); //I ADDED THE SPAWNER PART- GameObject.FindGameObjectWithTag("spawner").transform.position
-            Quaternion headRotation = Quaternion.Inverse(transform.rotation) * headTransform.rotation;
+            Vector3 headPos = Camera.main.transform.position;
+            Vector3 direction = Camera.main.transform.forward;
 
-            // every player's sends info on their position to update constantly
-            CustomMessages.Instance.SendHeadTransform(headPosition, headRotation);
-
-            // update own player's position/rotation
-            localPlayer.PlayerObject.transform.position = headPosition;
-            localPlayer.PlayerObject.transform.rotation = headRotation;
-
-            // render Game Master as different material from other players
-            if (ImGameMaster())
-                localPlayer.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialGameMaster;
-            else
-                localPlayer.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialNormal;
-
-
-            
-            // Game Master checks if game state needs to be changed
-            if (ImGameMaster() && inGame && !resourceLocked)
+            RaycastHit hitInfo;
+            if (Physics.Raycast(headPos, direction, out hitInfo))
             {
-                switch (gameState)
+                if (hitInfo.distance < MODEL_RANGE)
                 {
-                    case 0:
-                        if (Time.time > delayInterval)
-                            EndPrelude(broadcast: true);
-                        break;
-                    case 1:
-                        if (safePlayers.Count >= maxSafePlayers)
-                            EndInterlude(broadcast: true);
-                        break;
-                    case 2:
-                        if (Time.time > delayInterval)
-                            EndRound(broadcast: true);
-                        break;
-                    default:
-                        break;
+                    GameObject model = hitInfo.collider.gameObject;
+                    ModelController mc = model.GetComponentInChildren<ModelController>();
+                    if (mc)
+                    {
+                        mc.Rollover();
+                    }
                 }
             }
 
-            //messages commented out for now so xianhai does not question what i am doing
-            //show player countdown in prelude/postlude
+
+            if (inCountdown)
+            {
+                HUDimage.GetComponent<Image>().enabled = true;
+
+                int timeLeft = (int)Mathf.Ceil(delayInterval - Time.time); ;
+                if (timeLeft == 3)
+                {
+                    HUDimage.GetComponent<Image>().sprite = sprites[(int)Images.Count_3];
+                }
+                else if (timeLeft == 2)
+                {
+                    HUDimage.GetComponent<Image>().sprite = sprites[(int)Images.Count_2];
+                }
+                else if (timeLeft == 1)
+                {
+                    HUDimage.GetComponent<Image>().sprite = sprites[(int)Images.Count_1];
+                }
+                else if (Time.time > delayInterval)
+                {
+                    inGame = true;
+                    inCountdown = false;
+                    HUDimage.GetComponent<Image>().enabled = false;
+                    if (ImGameMaster())
+                        StartRound(broadcast: true);
+                }
+
+                return;
+            }
+
+            if (!ImGameMaster() || !inGame)
+                return;
+
+            GameObject target;
+
+            if (ObjectManager.Instance.sharedObjects.TryGetValue(TARGET_ID, out target))
+            {
+                target.transform.Rotate(Vector3.up * targetRotSpeed * Time.deltaTime);
+                if (inGame && gameState == INTERLUDE)
+                    target.transform.localPosition = Vector3.Lerp(target.transform.localPosition, new Vector3(target.transform.localPosition.x, 0f, target.transform.localPosition.z), Time.deltaTime);
+                else if (inGame && gameState == POSTLUDE)    
+                    target.transform.localPosition = Vector3.Lerp(target.transform.localPosition, new Vector3(target.transform.localPosition.x, targetSpawnHeight, target.transform.localPosition.z), Time.deltaTime);
+
+                ObjectManager.Instance.PosObject(TARGET_ID, target.transform.localPosition, true);
+                ObjectManager.Instance.RotObject(TARGET_ID, target.transform.localRotation, true);
+                
+            }
+            
+            // Game Master checks if game state needs to be changed
+
             switch (gameState)
             {
                 case 0:
-                    //if(roundStarted)
-                        //Debug.Log("Round Starting In:" + (delayInterval - Time.time)); 
+                    if (Time.time > delayInterval)
+                        EndPrelude(broadcast: true);
                     break;
                 case 1:
-                    //Debug.Log("Enter the target!");
+                    if (safePlayers.Count >= maxSafePlayers)
+                        EndInterlude(broadcast: true);
                     break;
                 case 2:
-                    //Debug.Log("Next Round In:" + (delayInterval - Time.time));
+                    if (Time.time > delayInterval)
+                        EndRound(broadcast: true);
+                    break;
+                case 3:
+                    if (Time.time > delayInterval)
+                        RoundInterval(broadcast: true);
                     break;
                 default:
                     break;
             }
-
         }
 
-        // Used to remove player from session
-        protected override void OnDestroy()
+        private void Connected(object sender = null, EventArgs e = null)
         {
-            if (SharingStage.Instance != null)
-            {
-                if (SharingStage.Instance.SessionUsersTracker != null)
-                {
-                    SharingStage.Instance.SessionUsersTracker.UserJoined -= UserJoinedSession;
-                    SharingStage.Instance.SessionUsersTracker.UserLeft -= UserLeftSession;
-                }
-            }
-
-            base.OnDestroy();
-        }
-
-        /// <summary>
-        /// Called when a new user is leaving the current session.
-        /// </summary>
-        /// <param name="user">User that left the current session.</param>
-        private void UserLeftSession(User user)
-        {
-            int userId = user.GetID();
-            if (userId != SharingStage.Instance.Manager.GetLocalUser().GetID())
-            {
-                RemovePlayer(remotePlayers[userId].PlayerObject);
-                remotePlayers.Remove(userId);
-            }
-        }
-
-        /// <summary>
-        /// Called when a user is joining the current session.
-        /// </summary>
-        /// <param name="user">User that joined the current session.</param>
-        private void UserJoinedSession(User user)
-        {
-            if (user.GetID() != SharingStage.Instance.Manager.GetLocalUser().GetID())
-            {
-                GetPlayerInfo(user.GetID());
-            }
-        }
-
-        /// <summary>
-        /// Gets the data structure for the remote users' head position.
-        /// </summary>
-        /// <param name="userId">User ID for which the remote head info should be obtained.</param>
-        /// <returns>RemoteHeadInfo for the specified user.</returns>
-        public PlayerInfo GetPlayerInfo(long userId)
-        {
-            PlayerInfo playerInfo;
-
-            // Get the head info if its already in the list, otherwise add it
-            if (!remotePlayers.TryGetValue(userId, out playerInfo))
-            {
-                playerInfo = new PlayerInfo();
-                playerInfo.UserID = userId;
-                playerInfo.PlayerObject = CreateRemotePlayer();
-                playerInfo.PlayerObject.GetComponent<Player>().PlayerID = userId;
-                
-                remotePlayers.Add(userId, playerInfo);
-            }
-
-            return playerInfo;
-        }
-        
-        /// <summary>
-        /// Creates a new game object to represent the user's head.
-        /// </summary>
-        /// <returns></returns>
-        ///     
-        private GameObject CreateRemotePlayer()
-        {
-            GameObject newPlayerObj = Instantiate(p_Player, gameObject.transform);
-            newPlayerObj.tag = "player";
-            newPlayerObj.transform.parent = gameObject.transform;
-            newPlayerObj.transform.localScale = Vector3.one * 0.2f;
-            return newPlayerObj;
-        }
-
-        /// <summary>
-        /// When a user has left the session this will cleanup their
-        /// head data.
-        /// </summary>
-        /// <param name="remoteHeadObject"></param>
-        private void RemovePlayer(GameObject remotePlayerObject)
-        {
-            DestroyImmediate(remotePlayerObject);
+            SharingStage.Instance.SharingManagerConnected -= Connected;
         }
 
         public void OnSpeechKeywordRecognized(SpeechKeywordRecognizedEventData eventData)
@@ -289,44 +246,99 @@ namespace HoloToolkit.Sharing.Tests
                 case "start":
                     PlayGame();
                     break;
+                case "gallery":
+                    ShowGallery(true);
+                    break;
+                case "lobby":
+                    ShowLobby(true);
+                    break;
                 default:
                     break;
             }
         }
 
-
-        private void SpawnTarget()
+        public void OnInputClicked(InputClickedEventData eventData)
         {
-            // only the Game Master can spawn objects (?)
-            if (ImGameMaster())
+            Vector3 headPos = Camera.main.transform.position;
+            Vector3 direction = Camera.main.transform.forward;
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(headPos, direction, out hitInfo))
             {
-                // get one's own position information
-                Transform headTransform = Camera.main.transform;
-                // spawn object in front of player by a certain amount
-                Vector3 spawnPosition = headTransform.position + headTransform.forward * 3;
-
-                spawnPosition = transform.InverseTransformPoint(spawnPosition); //I ADDED THE SPAWNER PART- GameObject.FindGameObjectWithTag("spawner").transform.position
-                Quaternion spawnRotation = Quaternion.Inverse(transform.rotation) * headTransform.rotation;
-
-                // send message to all users that an object was spawned containing object's information
-                CustomMessages.Instance.SendSpawnTarget(spawnPosition, spawnRotation);
-
-                GameObject target;
-                // if object has not been made yet, create it (?)
-                if (!sharedObjects.TryGetValue("target", out target))
+                if (hitInfo.distance < MODEL_RANGE)
                 {
-                    target = Instantiate(p_Target, gameObject.transform);
-                    //target.transform.localScale = Vector3.one * 0.2f;
-                    sharedObjects.Add("target", target);
+                    GameObject model = hitInfo.collider.gameObject;
+                    ModelController mc = model.GetComponentInChildren<ModelController>();
+                    if (mc)
+                    {
+                        mc.Activate();
+                    }
                 }
-
-                target.transform.localPosition = spawnPosition;
-                target.transform.localRotation = spawnRotation;
             }
+
+
+            string bulletID = BULLET_ID + objectCount.ToString() + GetMyID().ToString();
+            objectCount++;
+
+            Vector3 bulletPos = transform.InverseTransformPoint(Camera.main.transform.TransformPoint(Vector3.forward));
+            Vector3 bulletAngvel = new Vector3(
+                UnityEngine.Random.Range(0f, 360f),
+                UnityEngine.Random.Range(0f, 360f),
+                UnityEngine.Random.Range(0f, 360f));
+
+            ObjectManager.Instance.SpawnObject(bulletID, (int)ObjectManager.Prefabs.Bullet, true);
+            ObjectManager.Instance.PosObject(bulletID, bulletPos, true);
+            ObjectManager.Instance.ApplyVelocity(bulletID, bulletSpeed * (bulletPos - transform.InverseTransformPoint(Camera.main.transform.position)), true);
+            ObjectManager.Instance.ApplyAngVelocity(bulletID, bulletAngvel, true);
+            
+            
         }
-        
-        // what is broadcast
-        // Called when player collides with a target
+
+        private void WorldSetup()
+        {
+            ObjectManager.Instance.Initialize();
+            HeadManager.Instance.Initialize();
+            ObjectManager.Instance.SpawnObject(WARDROBE_ID, (int)ObjectManager.Prefabs.Wardrobe2, true);
+            ObjectManager.Instance.SpawnObject(GALLERY_ID, (int)ObjectManager.Prefabs.Gallery, true);
+            inGallery = false;
+
+            ObjectManager.Instance.SetActive(GALLERY_ID, 0);
+
+
+            Started = true;
+        }
+
+        private void ShowGallery(bool broadcast=true)
+        {
+            if (inGallery || inGame)
+                return;
+
+            if (broadcast)
+                CustomMessages.Instance.SendShowGallery();
+
+            ObjectManager.Instance.SetActive(GALLERY_ID, 1);
+            ObjectManager.Instance.SetActive(WARDROBE_ID, 0);
+            //AudioManager.Instance.PlayClip(CAMERA_ID, (int)AudioManager.AudioClips.GalleryBGM);
+
+            inGallery = true;
+        }
+
+        private void ShowLobby(bool broadcast = true)
+        {
+            if (!inGallery || inGame)
+                return;
+
+            if (broadcast)
+                CustomMessages.Instance.SendShowLobby();
+
+            ObjectManager.Instance.SetActive(GALLERY_ID, 0);
+            ObjectManager.Instance.SetActive(WARDROBE_ID, 1);
+            AudioManager.Instance.StopClip(CAMERA_ID);
+
+            inGallery = false;
+        }
+
+
         public void TargetCollision(long colliderID, bool broadcast=false)
         {
            
@@ -335,64 +347,46 @@ namespace HoloToolkit.Sharing.Tests
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendTargetCollision(colliderID);
 
-            resourceLocked = true;
 
-            GameObject target;
-            // set target object to materialTargetCollided (green color)
-            if (sharedObjects.TryGetValue("target", out target))
-            {
-                target.GetComponentInChildren<Renderer>().sharedMaterial = materialTargetCollided;
-            }
-            foreach (long id in alivePlayers)
-            {
-                Debug.Log("ALIVE ID: " + id);
-            }
+            ObjectManager.Instance.ChangeMaterial(TARGET_ID, (int)ObjectManager.Materials.Collided);
 
-            Debug.Log("collider id: " + colliderID);
             // Show player is safe if they collided before round ended and are not already safe
             if (alivePlayers.Contains(colliderID) && safePlayers.Count < maxSafePlayers && !safePlayers.Contains(colliderID))
             {
                 safePlayers.Add(colliderID);
                 if (IDisMine(colliderID))
                 {
+                    AudioManager.Instance.PlayClip(PLAYER_ID + colliderID, (int)AudioManager.AudioClips.Pop);
                     Debug.Log("You are safe");
-                    Camera.main.GetComponent<AudioSource>().Play();
                 }
             }
-
-            resourceLocked = false;
         }
 
         private void StartRound(bool broadcast=false)
         {
-            roundStarted = true;
+
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendStartRound();
-            gameState = PRELUDE;
 
-            //gameState = INTERLUDE;
+            gameState = PRELUDE;
             delayInterval = Time.time + delayPrelude;
             maxSafePlayers = maxRounds - completedRounds;
+            HUDimage.GetComponent<Image>().enabled = false;
+            inCountdown = false;
             safePlayers.Clear();
             Debug.Log("Round has begun");
+
             if (ImGameMaster())
             {
                 Vector3 targetPos = GetRandomPos();
                 Quaternion targetRot = GetRandomRot();
 
-                CustomMessages.Instance.SendSpawnTarget(targetPos, targetRot);
-                GameObject target;
-                if (!sharedObjects.TryGetValue("target", out target))
-                {
-                    target = Instantiate(p_Target, gameObject.transform);
-                    //target.transform.localScale = Vector3.one * 0.2f;
-                    sharedObjects.Add("target", target);
-                }
-
-                target.transform.localPosition = targetPos;
-                target.transform.localRotation = targetRot;
-                target.GetComponent<AudioSource>().Play();
-                target.transform.localScale = Vector3.zero;
+                ObjectManager.Instance.SpawnObject(TARGET_ID, (int)ObjectManager.Prefabs.Target, broadcast: true);
+                ObjectManager.Instance.PosObject(TARGET_ID, targetPos, broadcast: true);
+                ObjectManager.Instance.RotObject(TARGET_ID, targetRot, broadcast: true);
+                ObjectManager.Instance.ScaleObject(TARGET_ID, Vector3.zero, broadcast: true);
+                
+                AudioManager.Instance.PlayClip(TARGET_ID, (int)AudioManager.AudioClips.Ribbit, broadcast: true);
             }
 
         }
@@ -401,24 +395,18 @@ namespace HoloToolkit.Sharing.Tests
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendEndPrelude();
+
             Debug.Log("Interlude has begun");
             gameState = INTERLUDE;
-            GameObject target;
-            if (sharedObjects.TryGetValue("target", out target))
-            {
-                target.transform.localScale = Vector3.one;
-                Camera.main.GetComponent<AudioSource>().Play();
-            }
-        }
 
-        // Ends main part of the game and determines which players survived and displays it to their screens
+            ObjectManager.Instance.ScaleObject(TARGET_ID, Vector3.one);
+        }
+        
         private void EndInterlude(bool broadcast=false)
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendEndInterlude();
-
-            resourceLocked = true;
-
+            
             // goes through each player that was playing in the round
             
             for (int i = alivePlayers.Count - 1; i >= 0; i--)
@@ -426,78 +414,87 @@ namespace HoloToolkit.Sharing.Tests
                 // if not safe, remove player from alive players and set as dead
                 if (!safePlayers.Contains(alivePlayers[i]))
                 {
-
-                    
-
-                    PlayerInfo playerInfo;
-                    if (remotePlayers.TryGetValue(alivePlayers[i], out playerInfo))
-                        playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialDead;
+                    ObjectManager.Instance.ChangeMaterial(PLAYER_ID + alivePlayers[i].ToString(), (int)ObjectManager.Materials.Dead);
 
                     // if my player is dead, display it
                     if (IDisMine(alivePlayers[i]))
-                        Debug.Log("You have died");
+                    {
+                        HUDimage.GetComponent<Image>().enabled = true;
+                        HUDimage.GetComponent<Image>().sprite = sprites[(int) Images.Youreout];
+                        AudioManager.Instance.PlayClip(CAMERA_ID, (int)AudioManager.AudioClips.Fail);
+                       // var picTexture = (Texture2D)Pictures.Load("loser")
+                    }
 
                     alivePlayers.RemoveAt(i);
                 }
                 else
                 {
-                    
                     // if alive, show they survived
-                    PlayerInfo playerInfo;
-                    if (remotePlayers.TryGetValue(alivePlayers[i], out playerInfo))
-                        playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialSurvived;
-                    
+                    ObjectManager.Instance.ChangeMaterial(PLAYER_ID + alivePlayers[i].ToString(), (int)ObjectManager.Materials.Alive);
+
                     if (IDisMine(alivePlayers[i]))
-                        Debug.Log("You have survived");
+                    {
+                        HUDimage.GetComponent<Image>().enabled = true;
+                        HUDimage.GetComponent<Image>().sprite = sprites[(int)Images.Survived];
+                        AudioManager.Instance.PlayClip(CAMERA_ID, (int)AudioManager.AudioClips.Success);
+                    }
                 }
 
             }
 
+            AudioManager.Instance.StopClip(TARGET_ID);
+
             gameState = POSTLUDE;
 
             delayInterval = Time.time + delayPostlude;
-
-            resourceLocked = false;
+            
 
             Debug.Log("Postlude has begun");
 
         }
 
-        
-        private void EndRound(bool broadcast=false)
+        private void EndRound(bool broadcast = false)
         {
             if (broadcast && ImGameMaster())
                 CustomMessages.Instance.SendEndRound();
 
-            GameObject target;
+            ObjectManager.Instance.DestroyObject(TARGET_ID);
 
-            if (sharedObjects.TryGetValue("target", out target))
+            foreach (long playerID in alivePlayers)
             {
-                sharedObjects.Remove("target");
-                Destroy(target);
-            }
-            
-            foreach(long playerID in alivePlayers)
-            {
-                PlayerInfo playerInfo;
-                if (remotePlayers.TryGetValue(playerID, out playerInfo))
-                    playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialNormal;
-
+                ObjectManager.Instance.ChangeMaterial(PLAYER_ID + playerID, (int)ObjectManager.Materials.Normal);
 
                 if (IDisMine(playerID))
                     Debug.Log("You remain in the game");
             }
 
             completedRounds++;
-            gameState = -1;
             Debug.Log("Completed " + completedRounds + " rounds");
+            if (!ImGameMaster())
+                return;
 
-            if (ImGameMaster()) {
-                if (completedRounds < maxRounds)
-                    StartRound(true);
-                else
-                    TerminateGame(true);
-            }         
+            if (completedRounds < maxRounds)
+            {
+                gameState = ROUND_INTERVAL;
+
+                delayInterval = Time.time + delayRoundInterval;
+                HUDimage.GetComponent<Image>().enabled = true;
+                HUDimage.GetComponent<Image>().sprite = sprites[(int)Images.RoundInterlude];
+            }
+            else
+            {
+                TerminateGame(true);
+            }
+        }
+
+        private void RoundInterval(bool broadcast=false)
+        {
+            if (broadcast && ImGameMaster())
+                CustomMessages.Instance.SendRoundInterval();
+
+            if (ImGameMaster())
+                StartRound(true);
+            
         }
 
         private void InitializeGame(bool broadcast=false)
@@ -508,23 +505,23 @@ namespace HoloToolkit.Sharing.Tests
             if (inGame)
                 return;
 
-            
+            ObjectManager.Instance.SetActive(WARDROBE_ID, 0);
 
-            playersTotal = remotePlayers.Keys.Count + 1;
+            playersTotal = HeadManager.Instance.getCurrentPlayers().Keys.Count;
 
             allPlayers.Clear();
             alivePlayers.Clear();
             safePlayers.Clear();
             
-            foreach(long userID in remotePlayers.Keys)
+            foreach(long userID in HeadManager.Instance.getCurrentPlayers().Keys)
             {
                 allPlayers.Add(userID);
                 alivePlayers.Add(userID);
             }
 
-            inGame = true;
+            inCountdown = true;
+            delayInterval = Time.time + COUNTDOWN;
             completedRounds = 0;
-            playersLeft = playersTotal;
             maxRounds = playersTotal - 1;
             
         }
@@ -537,12 +534,11 @@ namespace HoloToolkit.Sharing.Tests
             allPlayers.Clear();
             alivePlayers.Clear();
             safePlayers.Clear();
-
+            ObjectManager.Instance.SetActive(WARDROBE_ID, 1);
             inGame = false;
             completedRounds = 0;
-            playersLeft = 0;
             maxRounds = 0;
-
+            HUDimage.GetComponent<Image>().enabled = false;
             gameMasterID = 0;
         }
 
@@ -552,61 +548,29 @@ namespace HoloToolkit.Sharing.Tests
             if (!ImGameMaster())
                 return;
 
-            if (remotePlayers.Keys.Count + 1 < 2)
+            if (HeadManager.Instance.getCurrentPlayers().Keys.Count < 2)
                 return;
 
+            ObjectManager.Instance.ChangeMaterial(PLAYER_ID + GetMyID().ToString(), (int)ObjectManager.Materials.GM, true);
+
             InitializeGame(broadcast: true);
-            StartRound(broadcast: true);
-
-            
         }
 
-        /// <summary>
-        /// Called when a remote user sends a head transform.
-        /// </summary>
-        /// <param name="msg"></param>
-        private void HandleUpdatePlayer(NetworkInMessage msg)
+        #region Handlers
+
+
+        private void HandleShowGallery(NetworkInMessage msg)
         {
-            // Parse the message
-            long userID = msg.ReadInt64();
+            msg.ReadInt64();
 
-            Vector3 playerPos = CustomMessages.Instance.ReadVector3(msg);
-
-            Quaternion playerRot = CustomMessages.Instance.ReadQuaternion(msg);
-
-            PlayerInfo playerInfo = GetPlayerInfo(userID);
-            playerInfo.PlayerObject.transform.localPosition = playerPos;
-            playerInfo.PlayerObject.transform.localRotation = playerRot;
-
-            if (IsGameMaster(userID))
-                playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialGameMaster;
-            else
-                playerInfo.PlayerObject.GetComponent<Renderer>().sharedMaterial = materialNormal;
-
+            ShowGallery();
         }
 
-        private void HandleSpawnTarget(NetworkInMessage msg)
+        private void HandleShowLobby(NetworkInMessage msg)
         {
-            long userID = msg.ReadInt64();
+            msg.ReadInt64();
 
-            Vector3 targetPos = CustomMessages.Instance.ReadVector3(msg);
-
-            Quaternion targetRot = CustomMessages.Instance.ReadQuaternion(msg);
-
-            GameObject target;
-            if (!sharedObjects.TryGetValue("target", out target))
-            {
-                target = Instantiate(p_Target, gameObject.transform);
-                //target.transform.localScale = Vector3.one * 0.2f;
-                sharedObjects.Add("target", target);
-            }
-
-            target.transform.localPosition = targetPos;
-            target.transform.localRotation = targetRot;
-            target.GetComponent<AudioSource>().Play();
-            target.GetComponent<Renderer>().enabled = false;
-            target.GetComponent<Collider>().enabled = false;
-
+            ShowLobby();
         }
 
         private void HandleTargetCollision(NetworkInMessage msg)
@@ -615,7 +579,6 @@ namespace HoloToolkit.Sharing.Tests
 
             TargetCollision(msg.ReadInt64());  
         }
-
 
         private void HandleInitializeGame(NetworkInMessage msg)
         {
@@ -647,6 +610,11 @@ namespace HoloToolkit.Sharing.Tests
             EndRound();
         }
 
+        private void HandleRoundInterval(NetworkInMessage msg)
+        {
+            RoundInterval();
+        }
+
         private void HandleUpdateGameMaster(NetworkInMessage msg)
         {
             Debug.Log("Designated gamemaster");
@@ -655,16 +623,11 @@ namespace HoloToolkit.Sharing.Tests
                 gameMasterID = userID;
         }
 
-        private void HandleSafeSignal(NetworkInMessage msg)
-        {
-            msg.ReadInt64();
-            long playerID = msg.ReadInt64();
-            if (IDisMine(playerID))
-                Debug.Log("You are safe");
-            
-        }
+        #endregion
 
-        private bool IsGameMaster(long userID)
+        #region Helper methods
+
+        public bool IsGameMaster(long userID)
         {
             return userID == gameMasterID;
         }
@@ -674,10 +637,16 @@ namespace HoloToolkit.Sharing.Tests
             return IDisMine(gameMasterID);
         }
 
-        private bool IDisMine(long userID)
+        public bool IDisMine(long userID)
         {
-            return SharingStage.Instance.Manager.GetLocalUser().GetID() == userID;
+            return GetMyID() == userID;
         }
+
+        public long GetMyID()
+        {
+            return SharingStage.Instance.Manager.GetLocalUser().GetID();
+        }
+
         private bool IsGameMasterFree()
         {
             return gameMasterID == 0;
@@ -700,18 +669,27 @@ namespace HoloToolkit.Sharing.Tests
 
         private Vector3 GetRandomPos(float maxRange=5.0f, float maxAdjust=0.8f)
         {
+            /*
             Quaternion randomRot = Quaternion.Euler(0.0f, UnityEngine.Random.Range(0f, 360f), 0.0f);
 
             Vector3 randomVec = Vector3.forward.RotateAround(Vector3.up, randomRot);
+            randomVec += Vector3.up;
+            Vector3 transformOrigin = transform.position + Vector3.up;
             Debug.Log(randomRot);
             Debug.Log(randomVec);
             RaycastHit hitInfo;
-            if (!Physics.Raycast(transform.position, transform.TransformPoint(randomVec), out hitInfo, maxRange))
-                hitInfo.point = transform.position + maxRange * (transform.TransformPoint(randomVec) - transform.position);
+            if (!Physics.Raycast(transformOrigin, transform.TransformPoint(randomVec), out hitInfo, maxRange))
+                hitInfo.point = transformOrigin + maxRange * (transform.TransformPoint(randomVec) - transformOrigin).normalized;
             Debug.Log(hitInfo.point);
-            Vector3 randomPos = transform.InverseTransformPoint(hitInfo.point) * UnityEngine.Random.Range(0f, maxAdjust);
+            Vector3 randomPos = (transform.InverseTransformPoint(hitInfo.point) - Vector3.up) * UnityEngine.Random.Range(0f, 1f);
 
-            return randomPos;
+            return randomPos;*/
+            
+            //return transform.InverseTransformPoint(Camera.main.transform.TransformPoint(Vector3.forward * 2)) + Vector3.up * targetSpawnHeight;
+            return new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), targetSpawnHeight, UnityEngine.Random.Range(-5.0f, 5.0f));
         }
+
+        
+        #endregion
     }
 }

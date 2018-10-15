@@ -7,10 +7,12 @@ Assets\StoreLogo.png
 Assets\Wide310x150Logo.scale-200.png
 Data\globalgamemanagers
 Data\globalgamemanagers.assets
+Data\globalgamemanagers.assets.resS
 Data\level0
 Data\managedAssemblies.txt
 Data\nativePlugins.txt
 Data\resources.assets
+Data\resources.assets.resS
 Data\Resources\unity default resources
 Data\Resources\unity_builtin_extra
 Data\sharedassets0.assets
